@@ -115,9 +115,15 @@ wizard({
         WIZARD.paths.setDataPath("../assets/data/");
         WIZARD.paths.setSoundsPath("../assets/sound/");
 
-        this.loadImages("bg.png", "font.png", "tiles.png");
+        this.loadImages("bg.png", "font.png", "tiles.png", "player.png");
+
+
+        WIZARD.spritesheet.create("player", 16, 16);
+
+        WIZARD.animation.createFrameAnimation("player_idle_down", [[0,0],[1,0]], 400);
 
         WIZARD.spritesheet.create("font", 8, 8);
+        WIZARD.spritesheet.create("player", 16, 16);
         WIZARD.spritesheet.create("tiles", 16, 16);
         WIZARD.shader.create("shader", vs, fs2);
         WIZARD.shader.setCurrent("shader");

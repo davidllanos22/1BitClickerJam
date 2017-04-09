@@ -4,7 +4,7 @@ var entityChris = function(params){
     var targetY = params.y;
 
     this.render = function(wiz){
-        wiz.drawSprite("tiles", this.body.x, this.body.y,0,1);
+        wiz.drawAnimation("player", "player_idle_down", this.body.x, this.body.y);
     };
 
     this.update = function(wiz){
