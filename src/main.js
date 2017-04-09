@@ -163,7 +163,5 @@ wizard({
         this.clear("#000");
         WIZARD.scene.current.render(this);
         this.drawText("M:" + Math.floor(memory), WIZARD.camera.x, WIZARD.camera.y, "font");
-        this.drawSprite("tiles", -16, -16, 2, 1);
-
     }
 }).play();

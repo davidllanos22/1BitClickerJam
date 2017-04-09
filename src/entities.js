@@ -50,7 +50,6 @@ var entityTile = function(params){
     this.y = params.y;
     this.xx = params.xx;
     this.yy = params.yy;
-
     this.render = function(wiz){
         wiz.drawSprite("tiles", this.x, this.y, this.xx, this.yy);
     }
@@ -65,7 +64,8 @@ var entityPortal = function(params){
     this.yy = params.yy;
 
     this.render = function(wiz){
-        wiz.drawSprite("tiles", this.body.x, this.body.y, 2,1);
+
+        wiz.drawSprite("tiles", this.body.x, this.body.y, this.xx, this.yy);
     };
 
     this.update = function(wiz){
