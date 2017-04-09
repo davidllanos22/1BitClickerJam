@@ -100,10 +100,9 @@ var bB = 1;//WIZARD.math.randomBetween(0,1);
 //     bB = WIZARD.math.randomBetween(0,1);
 // },"infinite", false);
 
-var player;
-var object;
-
 var pressed;
+
+var bodyMouse = WIZARD.physics.createAABB(WIZARD.input.x, WIZARD.input.y, 1,1);
 
 wizard({
     width: 160,
@@ -129,6 +128,7 @@ wizard({
 
         WIZARD.entity.create("player", entityChris);
         WIZARD.entity.create("object", entityObject);
+        WIZARD.entity.create("portal", entityPortal);
         WIZARD.entity.create("tile", entityTile);
 
         WIZARD.map.create("town", mapTown);
@@ -139,11 +139,7 @@ wizard({
         WIZARD.map.loadToScene("house", "house", mapLoader);
         WIZARD.map.loadToScene("town", "town", mapLoader);
 
-        WIZARD.scene.setCurrent("town", 0, this);
-
-
-        player = new entityChris({x:10, y:10});
-        object = new entityObject({x:40, y:40});
+        WIZARD.scene.setCurrent("house", 0, this);
 
         WIZARD.time.createTimer("incrementMemory", 1000, incrementMemory,"infinite", false);
 
@@ -156,20 +152,18 @@ wizard({
         time += 0.0001;
         if(time > 2) time = 1;
 
+        bodyMouse.x = WIZARD.input.x / this.scale + WIZARD.camera.x;
+        bodyMouse.y =  WIZARD.input.y / this.scale + WIZARD.camera.y;
 
         pressed = WIZARD.input.mouseJustPressed(0);
 
         WIZARD.scene.current.update(this);
-
-        //player.update(this, pressed);
-        //object.update(this, pressed);
-
-
-
     },
     render: function(){
         this.clear("#000");
         WIZARD.scene.current.render(this);
         this.drawText("M:" + Math.floor(memory), WIZARD.camera.x, WIZARD.camera.y, "font");
+        this.drawSprite("tiles", -16, -16, 2, 1);
+
     }
 }).play();

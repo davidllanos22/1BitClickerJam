@@ -67,7 +67,9 @@ var mapLoader = function(id, x, y, xx, yy, layer, sceneName){
         }if(id == 9) { //Object
             WIZARD.entity.instantiateToScene("object", {x: x * 16, y: y * 16}, sceneName);
         }if(id == 10) { //To Town
-            WIZARD.entity.instantiateToScene("object", {x: x * 16, y: y * 16}, sceneName);
+            WIZARD.entity.instantiateToScene("portal", {x: x * 16, y: y * 16, scene: "town", sceneX: 7, sceneY: 5, xx:xx, yy:yy}, sceneName);
+        }if(id == 11) { //To House
+            WIZARD.entity.instantiateToScene("portal", {x: x * 16, y: y * 16, scene: "house", sceneX: 7, sceneY: 5, xx:xx, yy:yy}, sceneName);
         }else{
             var scene = WIZARD.scene.scenes[sceneName];
             if(!scene.tiles) scene.tiles = [];

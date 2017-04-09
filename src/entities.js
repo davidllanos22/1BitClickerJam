@@ -22,7 +22,7 @@ var entityChris = function(params){
 
 var entityObject =  function(params){
     this.body = WIZARD.physics.createAABB(params.x, params.y, 16,16);
-    var body2 = WIZARD.physics.createAABB(WIZARD.input.x, WIZARD.input.y, 5,5);
+
 
     var estado = false;
 
@@ -36,10 +36,7 @@ var entityObject =  function(params){
 
     this.update = function(wiz){
         if(pressed){
-          body2.x = WIZARD.input.x / wiz.scale + WIZARD.camera.x;
-          body2.y =  WIZARD.input.y / wiz.scale + WIZARD.camera.y;
-
-          if (WIZARD.physics.intersects(this.body,body2)){
+          if (WIZARD.physics.intersects(this.body,bodyMouse)){
               estado = !estado;
               incrementSpeed();
           }
@@ -57,4 +54,26 @@ var entityTile = function(params){
     this.render = function(wiz){
         wiz.drawSprite("tiles", this.x, this.y, this.xx, this.yy);
     }
+};
+
+var entityPortal = function(params){
+    this.body = WIZARD.physics.createAABB(params.x, params.y, 16,16);
+    this.scene = params.scene;
+    this.sceneX  = params.sceneX;
+    this.sceneY = params.sceneY;
+    this.xx = params.xx;
+    this.yy = params.yy;
+
+    this.render = function(wiz){
+        wiz.drawSprite("tiles", this.body.x, this.body.y, 2,1);
+    };
+
+    this.update = function(wiz){
+
+        if(pressed) {
+            if (WIZARD.physics.intersects(this.body, bodyMouse)) {
+                WIZARD.scene.setCurrent(this.scene, 0, this);
+            }
+        }
+    };
 };
