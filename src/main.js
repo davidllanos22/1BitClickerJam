@@ -132,8 +132,12 @@ wizard({
         WIZARD.entity.create("object", entityObject);
         WIZARD.entity.create("tile", entityTile);
 
+        WIZARD.map.create("town", mapHouse);
         WIZARD.map.create("house", mapHouse);
+        WIZARD.scene.create("town", sceneTown);
         WIZARD.scene.create("house", sceneHouse);
+
+
         WIZARD.scene.setCurrent("house", 0, this);
         WIZARD.map.loadToScene("house", "house", mapLoader);
 
