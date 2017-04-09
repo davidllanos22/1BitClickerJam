@@ -133,6 +133,9 @@ wizard({
 
  		player = new entityChris({x:10, y:10});
         object = new entityObject({x:40, y:40});
+
+        WIZARD.time.createTimer("incrementMemory", 1000, incrementMemory,"infinite", false);
+
     },
 
     update: function(){
@@ -142,6 +145,7 @@ wizard({
         time += 0.0001;
         if(time > 2) time = 1;
 
+
         pressed = WIZARD.input.mouseJustPressed(0);
 
         WIZARD.scene.current.update(this);
@@ -149,16 +153,12 @@ wizard({
         //player.update(this, pressed);
         //object.update(this, pressed);
 
+
+
     },
     render: function(){
         this.clear("#000");
-        var w = WIZARD.images["bg"].width;
-        var h = WIZARD.images["bg"].height;
-        //this.drawImage("bg",this.width/2 - w / 2,this.height/2 - h / 2);
-        this.drawText("Hello Limbo!", 0, 0, "font");
-        //this.drawImage("bg",this.width/2 - w / 2,this.height/2 - h / 2);
         WIZARD.scene.current.render(this);
-        //player.render(this);
-        //object.render(this);
+        this.drawText("M:" + Math.floor(memory), WIZARD.camera.x, WIZARD.camera.y, "font");
     }
 }).play();

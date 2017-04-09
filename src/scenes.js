@@ -9,7 +9,6 @@ var sceneHouse = {
         WIZARD.scene.updateEntities(this, wiz);
     },
     render: function(wiz){
-        wiz.clear("#cc4400");
         WIZARD.scene.renderEntitiesAndLayers(this, wiz);
     },
     onExit: function(wiz){

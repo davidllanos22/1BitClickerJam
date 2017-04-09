@@ -41,6 +41,7 @@ var entityObject =  function(params){
 
           if (WIZARD.physics.intersects(this.body,body2)){
               estado = !estado;
+              incrementSpeed();
           }
       }
 
