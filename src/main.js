@@ -80,6 +80,7 @@ void main() {
 }
 `;
 
+
 var time = 1;
 
 var rA = WIZARD.math.randomBetween(0,1);
@@ -139,17 +140,22 @@ wizard({
         WIZARD.paths.setDataPath("../assets/data/");
         WIZARD.paths.setSoundsPath("../assets/sound/");
 
-        this.loadImages("bg.png");
-        WIZARD.shader.create("shader", vs, fs2);
-        //WIZARD.shader.setCurrent("shader");
+        this.loadImages("bg.png", "font.png", "tiles.png");
 
-        player = new entityChris({x:10, y:10});
+        WIZARD.spritesheet.create("font", 8, 8);
+        WIZARD.spritesheet.create("tiles", 16, 16);
+        WIZARD.shader.create("shader", vs, fs2);
+        WIZARD.shader.setCurrent("shader");
+
+        WIZARD.scene.create("house", sceneHouse);
+        WIZARD.scene.setCurrent("house", 0, this);
+ 		player = new entityChris({x:10, y:10});
     },
 
     update: function(){
-        //this.gl.uniform1f(WIZARD.shader.getUniform("shader", "u_time"), time);
-        //this.gl.uniform4f(WIZARD.shader.getUniform("shader", "u_swapColorA"), rA,gA,bA, 1);
-        //this.gl.uniform4f(WIZARD.shader.getUniform("shader", "u_swapColorB"), rB,gB,bB, 1);
+        this.gl.uniform1f(WIZARD.shader.getUniform("shader", "u_time"), time);
+        this.gl.uniform4f(WIZARD.shader.getUniform("shader", "u_swapColorA"), rA, gA, bA, 1);
+        this.gl.uniform4f(WIZARD.shader.getUniform("shader", "u_swapColorB"), rB, gB, bB, 1);
         time += 0.0001;
         if(time > 2) time = 1;
 
@@ -159,7 +165,8 @@ wizard({
         this.clear("#686868");
         var w = WIZARD.images["bg"].width;
         var h = WIZARD.images["bg"].height;
-        this.drawImage("bg",this.width/2 - w / 2,this.height/2 - h / 2);
-        player.render(this);
+        //this.drawImage("bg",this.width/2 - w / 2,this.height/2 - h / 2);
+        this.drawText("Hello Limbo!", 0, 0, "font");
+		player.render(this);
     }
 }).play();

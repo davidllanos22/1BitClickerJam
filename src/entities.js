@@ -1,9 +1,10 @@
 var entityChris = function(params){
     this.body = WIZARD.physics.createAABB(params.x, params.y, 16, 16);
-    var targetX=0;
-    var targetY=0;
+    var targetX = params.x;
+    var targetY = params.y;
 
     this.render = function(wiz){
+        wiz.drawSprite("tiles", this.body.x, this.body.y,0,1);
         wiz.drawAABB(this.body, "#d3d3d3");
     };
 
