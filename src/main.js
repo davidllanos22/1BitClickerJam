@@ -90,34 +90,6 @@ var rB = WIZARD.math.randomBetween(0,1);
 var gB = WIZARD.math.randomBetween(0,1);
 var bB = WIZARD.math.randomBetween(0,1);
 
-var sceneHouse = {
-    entities: [],
-    onEnter: function(wiz){
-    },
-    update: function(wiz){
-        if(WIZARD.input.mouseJustPressed(0)){
-            WIZARD.scene.setCurrent("sceneB", 0, wiz);
-        }
-        if(WIZARD.input.keyJustPressed(WIZARD.keys.X)){
-            this.entities = [];
-        }
-        if(WIZARD.input.keyPressed(WIZARD.keys.A)){
-            var x = WIZARD.math.randomBetween(0, wiz.width - 32);
-            var y = WIZARD.math.randomBetween(8, wiz.width - 80);
-            WIZARD.entity.instantiate("test", {x: x, y: y});
-        }
-    },
-    render: function(wiz){
-        wiz.clear("#cc4400");
-        wiz.drawText("Entities: " + this.entities.length, 0, 0, "font");
-
-        WIZARD.scene.renderEntitiesAndLayers(this, wiz);
-    },
-    onExit: function(wiz){
-    }
-};
-
-
 
 WIZARD.time.createTimer("swapColor", 1000, function(){
     rA = WIZARD.math.randomBetween(0,1);
@@ -129,6 +101,7 @@ WIZARD.time.createTimer("swapColor", 1000, function(){
 },"infinite", false);
 
 var player;
+var object;
 
 wizard({
     width: 160,
@@ -150,6 +123,7 @@ wizard({
         WIZARD.scene.create("house", sceneHouse);
         WIZARD.scene.setCurrent("house", 0, this);
  		player = new entityChris({x:10, y:10});
+        object = new entityObject({x:40, y:40});
     },
 
     update: function(){
@@ -158,15 +132,20 @@ wizard({
         this.gl.uniform4f(WIZARD.shader.getUniform("shader", "u_swapColorB"), rB, gB, bB, 1);
         time += 0.0001;
         if(time > 2) time = 1;
+        var pressed = WIZARD.input.mouseJustPressed(0);
+        
+        player.update(this, pressed);
+        object.update(this, pressed);
 
-        player.update(this);
     },
     render: function(){
-        this.clear("#686868");
+        this.clear("#000");
         var w = WIZARD.images["bg"].width;
         var h = WIZARD.images["bg"].height;
         //this.drawImage("bg",this.width/2 - w / 2,this.height/2 - h / 2);
         this.drawText("Hello Limbo!", 0, 0, "font");
-		player.render(this);
+        //this.drawImage("bg",this.width/2 - w / 2,this.height/2 - h / 2);
+        player.render(this);
+        object.render(this);
     }
 }).play();
