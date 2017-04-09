@@ -117,7 +117,6 @@ wizard({
 
         this.loadImages("bg.png", "font.png", "tiles.png", "player.png");
 
-
         WIZARD.spritesheet.create("player", 16, 16);
 
         WIZARD.animation.createFrameAnimation("player_idle_down", [[0,0],[1,0]], 400);
@@ -132,16 +131,18 @@ wizard({
         WIZARD.entity.create("object", entityObject);
         WIZARD.entity.create("tile", entityTile);
 
-        WIZARD.map.create("town", mapHouse);
+        WIZARD.map.create("town", mapTown);
         WIZARD.map.create("house", mapHouse);
         WIZARD.scene.create("town", sceneTown);
         WIZARD.scene.create("house", sceneHouse);
 
-
-        WIZARD.scene.setCurrent("house", 0, this);
         WIZARD.map.loadToScene("house", "house", mapLoader);
+        WIZARD.map.loadToScene("town", "town", mapLoader);
 
- 		player = new entityChris({x:10, y:10});
+        WIZARD.scene.setCurrent("town", 0, this);
+
+
+        player = new entityChris({x:10, y:10});
         object = new entityObject({x:40, y:40});
 
         WIZARD.time.createTimer("incrementMemory", 1000, incrementMemory,"infinite", false);
