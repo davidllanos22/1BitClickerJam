@@ -83,25 +83,27 @@ void main() {
 
 var time = 1;
 
-var rA = WIZARD.math.randomBetween(0,1);
-var gA = WIZARD.math.randomBetween(0,1);
-var bA = WIZARD.math.randomBetween(0,1);
-var rB = WIZARD.math.randomBetween(0,1);
-var gB = WIZARD.math.randomBetween(0,1);
-var bB = WIZARD.math.randomBetween(0,1);
+var rA = 0;//WIZARD.math.randomBetween(0,1);
+var gA = 0;//WIZARD.math.randomBetween(0,1);
+var bA = 0;//WIZARD.math.randomBetween(0,1);
+var rB = 1;//WIZARD.math.randomBetween(0,1);
+var gB = 1;//WIZARD.math.randomBetween(0,1);
+var bB = 1;//WIZARD.math.randomBetween(0,1);
 
 
-WIZARD.time.createTimer("swapColor", 1000, function(){
-    rA = WIZARD.math.randomBetween(0,1);
-    gA = WIZARD.math.randomBetween(0,1);
-    bA = WIZARD.math.randomBetween(0,1);
-    rB = WIZARD.math.randomBetween(0,1);
-    gB = WIZARD.math.randomBetween(0,1);
-    bB = WIZARD.math.randomBetween(0,1);
-},"infinite", false);
+// WIZARD.time.createTimer("swapColor", 1000, function(){
+//     rA = WIZARD.math.randomBetween(0,1);
+//     gA = WIZARD.math.randomBetween(0,1);
+//     bA = WIZARD.math.randomBetween(0,1);
+//     rB = WIZARD.math.randomBetween(0,1);
+//     gB = WIZARD.math.randomBetween(0,1);
+//     bB = WIZARD.math.randomBetween(0,1);
+// },"infinite", false);
 
 var player;
 var object;
+
+var pressed;
 
 wizard({
     width: 160,
@@ -120,8 +122,15 @@ wizard({
         WIZARD.shader.create("shader", vs, fs2);
         WIZARD.shader.setCurrent("shader");
 
+        WIZARD.entity.create("player", entityChris);
+        WIZARD.entity.create("object", entityObject);
+        WIZARD.entity.create("tile", entityTile);
+
+        WIZARD.map.create("house", mapHouse);
         WIZARD.scene.create("house", sceneHouse);
         WIZARD.scene.setCurrent("house", 0, this);
+        WIZARD.map.loadToScene("house", "house", mapLoader);
+
  		player = new entityChris({x:10, y:10});
         object = new entityObject({x:40, y:40});
     },
@@ -132,10 +141,13 @@ wizard({
         this.gl.uniform4f(WIZARD.shader.getUniform("shader", "u_swapColorB"), rB, gB, bB, 1);
         time += 0.0001;
         if(time > 2) time = 1;
-        var pressed = WIZARD.input.mouseJustPressed(0);
-        
-        player.update(this, pressed);
-        object.update(this, pressed);
+
+        pressed = WIZARD.input.mouseJustPressed(0);
+
+        WIZARD.scene.current.update(this);
+
+        //player.update(this, pressed);
+        //object.update(this, pressed);
 
     },
     render: function(){
@@ -145,7 +157,8 @@ wizard({
         //this.drawImage("bg",this.width/2 - w / 2,this.height/2 - h / 2);
         this.drawText("Hello Limbo!", 0, 0, "font");
         //this.drawImage("bg",this.width/2 - w / 2,this.height/2 - h / 2);
-        player.render(this);
-        object.render(this);
+        WIZARD.scene.current.render(this);
+        //player.render(this);
+        //object.render(this);
     }
 }).play();

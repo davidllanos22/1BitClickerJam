@@ -2,9 +2,10 @@ var sceneHouse = {
     entities: [],
     tiles: [],
     onEnter: function(wiz){
-
+        console.log(this.entities);
     },
     update: function(wiz){
+
         WIZARD.scene.updateEntities(this, wiz);
     },
     render: function(wiz){
