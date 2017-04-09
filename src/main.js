@@ -104,7 +104,9 @@ wizard({
     scale: 4,
     pixelArt: true,
     create: function(){
-        WIZARD.paths.setImagesPath("./");
+        WIZARD.paths.setImagesPath("../assets/img/");
+        WIZARD.paths.setDataPath("../assets/data/");
+        WIZARD.paths.setSoundsPath("../assets/sound/");
 
         this.loadImages("bg.png");
         WIZARD.shader.create("shader", vs, fs2);
@@ -112,7 +114,6 @@ wizard({
     },
 
     update: function(){
-
         this.gl.uniform1f(WIZARD.shader.getUniform("shader", "u_time"), time);
         this.gl.uniform4f(WIZARD.shader.getUniform("shader", "u_swapColorA"), rA,gA,bA, 1);
         this.gl.uniform4f(WIZARD.shader.getUniform("shader", "u_swapColorB"), rB,gB,bB, 1);
