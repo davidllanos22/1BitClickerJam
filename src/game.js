@@ -13,7 +13,7 @@ var incrementMemory = function(){
 
 
 var incrementSpeed = function () {
-    speedMemory *= 2;
+    speedMemory *= 1.2;
 };
 
 
