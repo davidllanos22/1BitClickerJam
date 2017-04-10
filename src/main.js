@@ -173,6 +173,7 @@ wizard({
         this.clear("#000");
         WIZARD.scene.current.render(this);
         this.drawText("Mem:" + Math.floor(memory) + "%", WIZARD.camera.x, WIZARD.camera.y, "font");
+
         if(!overObject){
             this.drawSprite("mouse", bodyMouse.x, bodyMouse.y, 0, 0);
         }else{
@@ -180,5 +181,6 @@ wizard({
             this.drawSprite("mouse", bodyMouse.x, bodyMouse.y, 1, 0);
         }
 
+        overObject = false;
     }
 }).play();
