@@ -83,22 +83,24 @@ void main() {
 
 var time = 1;
 
-var rA = 0;//WIZARD.math.randomBetween(0,1);
-var gA = 0;//WIZARD.math.randomBetween(0,1);
-var bA = 0;//WIZARD.math.randomBetween(0,1);
-var rB = 1;//WIZARD.math.randomBetween(0,1);
-var gB = 1;//WIZARD.math.randomBetween(0,1);
-var bB = 1;//WIZARD.math.randomBetween(0,1);
+var rA = 0;
+var gA = 0;
+var bA = 0;
+var rB = 1;
+var gB = 1;
+var bB = 1;
 
+var generateColors = function(){
+    rA = WIZARD.math.randomBetween(0,1);
+    gA = WIZARD.math.randomBetween(0,1);
+    bA = WIZARD.math.randomBetween(0,1);
+    rB = WIZARD.math.randomBetween(0,1);
+    gB = WIZARD.math.randomBetween(0,1);
+    bB = WIZARD.math.randomBetween(0,1);
 
-// WIZARD.time.createTimer("swapColor", 1000, function(){
-//     rA = WIZARD.math.randomBetween(0,1);
-//     gA = WIZARD.math.randomBetween(0,1);
-//     bA = WIZARD.math.randomBetween(0,1);
-//     rB = WIZARD.math.randomBetween(0,1);
-//     gB = WIZARD.math.randomBetween(0,1);
-//     bB = WIZARD.math.randomBetween(0,1);
-// },"infinite", false);
+    console.log("Color A:{r: " + rA + ", g: " + gA + ", b: "+ bA +"}");
+    console.log("Color B:{r: " + rB + ", g: " + gB + ", b: "+ bB +"}");
+};
 
 var pressed;
 
@@ -160,6 +162,10 @@ wizard({
         pressed = WIZARD.input.mouseJustPressed(0);
 
         WIZARD.scene.current.update(this);
+
+        if(WIZARD.input.keyJustPressed(WIZARD.keys.ESC)){
+            generateColors();
+        }
     },
     render: function(){
         this.clear("#000");
