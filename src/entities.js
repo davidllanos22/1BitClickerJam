@@ -2,21 +2,40 @@ var entityChris = function(params){
     this.body = WIZARD.physics.createAABB(params.x, params.y, 16, 16);
     var targetX = params.x;
     var targetY = params.y;
+    var walking = 0;
 
     this.render = function(wiz){
-        wiz.drawAnimation("player", "player_idle_down", this.body.x, this.body.y);
+        if(walking==0){
+            wiz.drawAnimation("player", "player_idle_down", this.body.x, this.body.y);
+        }else if(walking==1){
+            wiz.drawAnimation("player","player_walk_left", this.body.x, this.body.y);
+        }else if(walking==2){
+            wiz.drawAnimation("player","player_walk_right", this.body.x, this.body.y);
+
+        }
     };
 
     this.update = function(wiz){
         if(pressed){
            targetX = WIZARD.input.x / wiz.scale + WIZARD.camera.x;
            targetY = WIZARD.input.y / wiz.scale + WIZARD.camera.y;
+
+           if(this.body.x > targetX){ // Camino a la izquierda
+               walking = 1;
+           }else{ // Camino a la derecha
+               walking = 2;
+           }
+        }
+
+        if(walking==2 && targetX - this.body.x < 1) { //Si llego a mi destino hacia la derecha
+            walking = 0;
+        }else if(walking==1 && targetX - this.body.x > -1){ //Si llego a mi destino hacia la izquierda
+            walking = 0;
         }
         this.body.x = WIZARD.math.lerp(this.body.x, targetX, 0.01);
         this.body.y = WIZARD.math.lerp(this.body.y, targetY, 0.01);
 
         WIZARD.camera.setPosition( this.body.x - wiz.width / 2,this.body.y - wiz.height / 2);
-
     };
 };
 
@@ -37,9 +56,15 @@ var entityObject =  function(params){
         if(pressed){
           if (WIZARD.physics.intersects(this.body,bodyMouse)){
               estado = !estado;
+              overObject = false;
               incrementSpeed();
           }
       }
+        if (WIZARD.physics.intersects(this.body,bodyMouse)){
+            overObject = true;
+        }else{
+            //overObject = false;
+        }
 
     };
 };

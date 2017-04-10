@@ -103,6 +103,7 @@ var generateColors = function(){
 };
 
 var pressed;
+var overObject;
 
 var bodyMouse = WIZARD.physics.createAABB(WIZARD.input.x, WIZARD.input.y, 1,1);
 
@@ -172,6 +173,12 @@ wizard({
         this.clear("#000");
         WIZARD.scene.current.render(this);
         this.drawText("Mem:" + Math.floor(memory) + "%", WIZARD.camera.x, WIZARD.camera.y, "font");
-        this.drawSprite("mouse", bodyMouse.x, bodyMouse.y, 0, 0);
+        if(!overObject){
+            this.drawSprite("mouse", bodyMouse.x, bodyMouse.y, 0, 0);
+        }else{
+
+            this.drawSprite("mouse", bodyMouse.x, bodyMouse.y, 1, 0);
+        }
+
     }
 }).play();
