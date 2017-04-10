@@ -116,7 +116,7 @@ wizard({
         WIZARD.paths.setDataPath("../assets/data/");
         WIZARD.paths.setSoundsPath("../assets/sound/");
 
-        this.loadImages("bg.png", "font.png", "tiles.png", "player.png");
+        this.loadImages("bg.png", "font.png", "tiles.png", "player.png", "mouse.png");
 
         WIZARD.spritesheet.create("player", 16, 16);
 
@@ -127,6 +127,7 @@ wizard({
         WIZARD.spritesheet.create("font", 8, 8);
         WIZARD.spritesheet.create("player", 16, 16);
         WIZARD.spritesheet.create("tiles", 16, 16);
+        WIZARD.spritesheet.create("mouse", 16, 16);
         WIZARD.shader.create("shader", vs, fs2);
         WIZARD.shader.setCurrent("shader");
 
@@ -171,5 +172,6 @@ wizard({
         this.clear("#000");
         WIZARD.scene.current.render(this);
         this.drawText("Mem:" + Math.floor(memory) + "%", WIZARD.camera.x, WIZARD.camera.y, "font");
+        this.drawSprite("mouse", bodyMouse.x, bodyMouse.y, 0, 0);
     }
 }).play();
