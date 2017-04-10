@@ -106,7 +106,7 @@ var bodyMouse = WIZARD.physics.createAABB(WIZARD.input.x, WIZARD.input.y, 1,1);
 
 wizard({
     width: 160,
-    height: 96,
+    height: 112,
     scale: 4,
     pixelArt: true,
     create: function(){
@@ -162,6 +162,6 @@ wizard({
     render: function(){
         this.clear("#000");
         WIZARD.scene.current.render(this);
-        this.drawText("M:" + Math.floor(memory), WIZARD.camera.x, WIZARD.camera.y, "font");
+        this.drawText("Mem:" + Math.floor(memory) + "%", WIZARD.camera.x, WIZARD.camera.y, "font");
     }
 }).play();
