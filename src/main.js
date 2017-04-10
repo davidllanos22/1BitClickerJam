@@ -118,7 +118,9 @@ wizard({
 
         WIZARD.spritesheet.create("player", 16, 16);
 
-        WIZARD.animation.createFrameAnimation("player_idle_down", [[0,0],[1,0]], 400);
+        WIZARD.animation.createFrameAnimation("player_idle_down", [[0,0],[1,0], [2,0]], 200);
+        WIZARD.animation.createFrameAnimation("player_walk_right", [[0,1], [1,1],[0,1],[2,1]], 250);
+        WIZARD.animation.createFrameAnimation("player_walk_left", [[0,2], [1,2],[0,2],[2,2]], 250);
 
         WIZARD.spritesheet.create("font", 8, 8);
         WIZARD.spritesheet.create("player", 16, 16);

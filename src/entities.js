@@ -23,7 +23,6 @@ var entityChris = function(params){
 var entityObject =  function(params){
     this.body = WIZARD.physics.createAABB(params.x, params.y, 16,16);
 
-
     var estado = false;
 
     this.render = function(wiz){
