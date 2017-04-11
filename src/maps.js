@@ -19,7 +19,7 @@ var mapHouse = {
             spriteSheetWidth: 16
         },
         { // Entities instances
-            data:[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 39, 0, 0, 0, 0, 19, 18, 2, 2, 0, 0, 17, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 2, 2, 2, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 3, 2, 0, 0, 0, 0, 0, 2, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 18, 0, 0, 0, 0, 0, 0],
+            data:[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 39, 0, 0, 0, 20, 19, 18, 2, 2, 0, 0, 17, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 2, 2, 2, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 3, 2, 0, 0, 0, 0, 0, 2, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 18, 0, 0, 0, 0, 0, 0],
             mapHeight:10,
             mapWidth:10,
             spriteSheetWidth: 16
@@ -246,7 +246,9 @@ var mapLoader = function(id, x, y, xx, yy, layer, sceneName){
             player = WIZARD.entity.instantiateToScene("player", {x: x * 16, y: y * 16}, sceneName);
         }if(id == 17) { //Object
             WIZARD.entity.instantiateToScene("object", {x: x * 16, y: y * 16}, sceneName);
-        }if(id == 18){//Object Observable
+        }if(id == 18){//Object Talkable
+            WIZARD.entity.instantiateToScene("objectObservable",{x: x * 16, y: y * 16}, sceneName);
+        }if(id == 19){//Object Observable
             WIZARD.entity.instantiateToScene("objectObservable",{x: x * 16, y: y * 16}, sceneName);
         }else{
             if(!scene.tiles) scene.tiles = [];

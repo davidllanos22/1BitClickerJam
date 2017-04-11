@@ -28,6 +28,7 @@ var entityChris = function(params){
                     } else {
                         var count = 0;
                         WIZARD.time.createTimer("easystar_" + p.id, 150, function(){
+                            if(path[count] == null) return;
                             p.targetX = path[count].x * 16;
                             p.targetY = path[count].y * 16;
                             count++;
@@ -86,15 +87,8 @@ var entityObject =  function(params){
 var entityObjectObservable =  function(params){
     this.body = WIZARD.physics.createAABB(params.x, params.y, 16,16);
 
-    var estado = false;
-
-
     this.render = function(wiz){
-        if(estado){
-            wiz.drawSprite("tiles", this.body.x, this.body.y,1,0);
-        }else{
-            wiz.drawSprite("tiles", this.body.x, this.body.y,1,1);
-        }
+        wiz.drawSprite("tiles", this.body.x, this.body.y,3,1);
     };
 
     this.update = function(wiz){
