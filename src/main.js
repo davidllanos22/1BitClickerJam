@@ -143,11 +143,27 @@ wizard({
 
         WIZARD.map.create("town", mapTown);
         WIZARD.map.create("house", mapHouse);
+        WIZARD.map.create("road_lake", mapRoadLake);
+        WIZARD.map.create("road_ins", mapRoadIns);
+        WIZARD.map.create("institute", mapInstitute);
+        WIZARD.map.create("lake", mapLake);
+        WIZARD.map.create("forest", mapForest);
+
         WIZARD.scene.create("town", sceneTown);
         WIZARD.scene.create("house", sceneHouse);
+        WIZARD.scene.create("road_lake", sceneRoadLake);
+        WIZARD.scene.create("road_ins", sceneRoadIns);
+        WIZARD.scene.create("institute", sceneInstitute);
+        WIZARD.scene.create("lake", sceneLake);
+        WIZARD.scene.create("forest", sceneForest);
 
         WIZARD.map.loadToScene("house", "house", mapLoader);
         WIZARD.map.loadToScene("town", "town", mapLoader);
+        WIZARD.map.loadToScene("road_lake", "road_lake", mapLoader);
+        WIZARD.map.loadToScene("road_ins", "road_ins", mapLoader);
+        WIZARD.map.loadToScene("institute", "institute", mapLoader);
+        WIZARD.map.loadToScene("lake", "lake", mapLoader);
+        WIZARD.map.loadToScene("forest", "forest", mapLoader);
 
         WIZARD.scene.setCurrent("house", 0, this);
 
