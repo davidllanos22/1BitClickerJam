@@ -107,6 +107,10 @@ var generateColors = function(){
 var player;
 var pressed;
 var overIcon;
+var textToShow = [""];
+var indexText = 0;
+var showText;
+var idEntityText;
 
 var easystar = new EasyStar.js();
 var easystarPath;
@@ -195,6 +199,7 @@ wizard({
 
         WIZARD.scene.current.update(this);
 
+
         if(WIZARD.input.keyJustPressed(WIZARD.keys.ESC)){
             generateColors();
         }
@@ -203,10 +208,13 @@ wizard({
         this.clear("#000");
         WIZARD.scene.current.render(this);
         this.drawText("Mem:" + Math.floor(memory) + "%", WIZARD.camera.x, WIZARD.camera.y, "font");
-
+        if(showText){
+            scrollingText.show(textToShow[indexText], WIZARD.camera.x, WIZARD.camera.y + 90, this);
+        }
         this.drawSprite("mouse", bodyMouse.x, bodyMouse.y, overIcon, 0);
 
         overIcon = 0;
+
     }
 }).play();
 

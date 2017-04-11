@@ -99,15 +99,18 @@ var entityObject =  function(params){
 
 var entityObjectObservable =  function(params){
     this.body = WIZARD.physics.createAABB(params.x, params.y, 16,16);
-
     this.render = function(wiz){
         wiz.drawSprite("tiles", this.body.x, this.body.y,3,1);
     };
 
     this.update = function(wiz){
         if(pressed){
+            if(idEntityText == this.id){
+                showText=false;
+                scrollingText.reset();
+            }
             if (WIZARD.physics.intersects(this.body,bodyMouse)){
-                //TODO mostrar mensaje
+                showTextEntity(this.id, "Un libro que habla!");
             }
         }
         if (WIZARD.physics.intersects(this.body,bodyMouse)){
@@ -118,15 +121,19 @@ var entityObjectObservable =  function(params){
 
 var entityNpc =  function(params){
     this.body = WIZARD.physics.createAABB(params.x, params.y, 16,16);
-    
+
     this.render = function(wiz){
         wiz.drawSprite("npc", this.body.x, this.body.y,0,0);
     };
 
     this.update = function(wiz){
         if(pressed){
+            if(idEntityText == this.id){
+                showText=false;
+                scrollingText.reset();
+            }
             if (WIZARD.physics.intersects(this.body,bodyMouse)){
-                //TODO mostrar mensaje
+                showTextEntity(this.id, "Hola, moriras.");
             }
         }
         if (WIZARD.physics.intersects(this.body,bodyMouse)){
@@ -178,3 +185,14 @@ var entityPortal = function(params){
         }
     };
 };
+
+var showTextEntity = function(id, string){
+    if(showText){
+        return;
+    }
+    idEntityText = id;
+    indexText++;
+    textToShow[indexText] = string;
+    showText=true;
+
+}
