@@ -2,36 +2,28 @@ var entityChris = function(params){
     this.body = WIZARD.physics.createAABB(params.x, params.y, 16, 16);
     this.targetX = params.x;
     this.targetY = params.y;
-    var walking = 0;
+    var walking = "player_idle_down";
 
     this.render = function(wiz){
-        if(walking==0){
-            wiz.drawAnimation("player", "player_idle_down", this.body.x, this.body.y);
-        }else if(walking==1){
-            wiz.drawAnimation("player","player_walk_left", this.body.x, this.body.y);
-        }else if(walking==2){
-            wiz.drawAnimation("player","player_walk_right", this.body.x, this.body.y);
-
-        }
+        wiz.drawAnimation("player", walking, this.body.x, this.body.y);
     };
 
     this.update = function(wiz){
         if(pressed){
-           this.targetX = WIZARD.input.x / wiz.scale + WIZARD.camera.x;
+            this.targetX = WIZARD.input.x / wiz.scale + WIZARD.camera.x;
             this.targetY = WIZARD.input.y / wiz.scale + WIZARD.camera.y;
 
            if(this.body.x > this.targetX){ // Camino a la izquierda
-               walking = 1;
+               walking = "player_walk_left";
            }else{ // Camino a la derecha
-               walking = 2;
+               walking = "player_walk_right";
            }
         }
 
-        if(walking==2 && this.targetX - this.body.x < 1) { //Si llego a mi destino hacia la derecha
-            walking = 0;
-        }else if(walking==1 && this.targetX - this.body.x > -1){ //Si llego a mi destino hacia la izquierda
-            walking = 0;
+        if( Math.abs(this.targetX - this.body.x) < 1) { //Si llego a mi destino.
+            walking = "player_idle_down";
         }
+        
         this.body.x = WIZARD.math.lerp(this.body.x, this.targetX, 0.01);
         this.body.y = WIZARD.math.lerp(this.body.y, this.targetY, 0.01);
 
