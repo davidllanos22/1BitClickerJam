@@ -103,6 +103,24 @@ var entityObjectObservable =  function(params){
     };
 };
 
+var entityNpc =  function(params){
+    this.body = WIZARD.physics.createAABB(params.x, params.y, 16,16);
+    
+    this.render = function(wiz){
+        wiz.drawSprite("npc", this.body.x, this.body.y,0,0);
+    };
+
+    this.update = function(wiz){
+        if(pressed){
+            if (WIZARD.physics.intersects(this.body,bodyMouse)){
+                //TODO mostrar mensaje
+            }
+        }
+        if (WIZARD.physics.intersects(this.body,bodyMouse)){
+            overIcon = 4; //Icono Talk
+        }
+    };
+};
 
 var entityTile = function(params){
     this.x = params.x;

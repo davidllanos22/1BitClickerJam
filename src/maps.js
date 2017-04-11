@@ -247,7 +247,7 @@ var mapLoader = function(id, x, y, xx, yy, layer, sceneName){
         }if(id == 17) { //Object
             WIZARD.entity.instantiateToScene("object", {x: x * 16, y: y * 16}, sceneName);
         }if(id == 18){//Object Talkable
-            WIZARD.entity.instantiateToScene("objectObservable",{x: x * 16, y: y * 16}, sceneName);
+            WIZARD.entity.instantiateToScene("npc",{x: x * 16, y: y * 16}, sceneName);
         }if(id == 19){//Object Observable
             WIZARD.entity.instantiateToScene("objectObservable",{x: x * 16, y: y * 16}, sceneName);
         }else{

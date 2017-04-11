@@ -126,7 +126,7 @@ wizard({
         WIZARD.paths.setDataPath("../assets/data/");
         WIZARD.paths.setSoundsPath("../assets/sound/");
 
-        this.loadImages("bg.png", "font.png", "tiles.png", "player.png", "mouse.png");
+        this.loadImages("bg.png", "font.png", "tiles.png", "npc.png" ,"player.png", "mouse.png");
 
         WIZARD.spritesheet.create("player", 16, 16);
 
@@ -137,6 +137,7 @@ wizard({
         WIZARD.spritesheet.create("font", 8, 8);
         WIZARD.spritesheet.create("player", 16, 16);
         WIZARD.spritesheet.create("tiles", 16, 16);
+        WIZARD.spritesheet.create("npc", 16, 16);
         WIZARD.spritesheet.create("mouse", 16, 16);
         WIZARD.shader.create("shader", vs, fs2);
         WIZARD.shader.setCurrent("shader");
@@ -144,6 +145,7 @@ wizard({
         WIZARD.entity.create("player", entityChris);
         WIZARD.entity.create("object", entityObject);
         WIZARD.entity.create("objectObservable", entityObjectObservable);
+        WIZARD.entity.create("npc", entityNpc);
         WIZARD.entity.create("portal", entityPortal);
         WIZARD.entity.create("tile", entityTile);
 
