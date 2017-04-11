@@ -110,8 +110,9 @@ var overIcon;
 
 var easystar = new EasyStar.js();
 easystar.setAcceptableTiles([0]);
-easystar.enableDiagonals();
-easystar.setIterationsPerCalculation(1000);
+//easystar.enableDiagonals();
+easystar.enableCornerCutting();
+easystar.setIterationsPerCalculation(100);
 
 var bodyMouse = WIZARD.physics.createAABB(WIZARD.input.x, WIZARD.input.y, 1,1);
 
@@ -122,9 +123,9 @@ wizard({
     fillScreen:true,
     pixelArt: true,
     create: function(){
-        WIZARD.paths.setImagesPath("../assets/img/");
-        WIZARD.paths.setDataPath("../assets/data/");
-        WIZARD.paths.setSoundsPath("../assets/sound/");
+        WIZARD.paths.setImagesPath("./assets/img/");
+        WIZARD.paths.setDataPath("./assets/data/");
+        WIZARD.paths.setSoundsPath("./assets/sound/");
 
         this.loadImages("bg.png", "font.png", "tiles.png", "npc.png" ,"player.png", "mouse.png");
 
