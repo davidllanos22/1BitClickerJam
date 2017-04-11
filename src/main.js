@@ -91,6 +91,8 @@ var gB = 1;
 var bB = 1;
 
 var generateColors = function(){
+    //Color A:{r: 0.2921388904396145, g: 0.38771675703581976, b: 0.7190860643404482}
+    //Color B:{r: 0.528005024206649, g: 0.9435701220295565, b: 0.18140640640489059}
     rA = WIZARD.math.randomBetween(0,1);
     gA = WIZARD.math.randomBetween(0,1);
     bA = WIZARD.math.randomBetween(0,1);
@@ -102,6 +104,7 @@ var generateColors = function(){
     console.log("Color B:{r: " + rB + ", g: " + gB + ", b: "+ bB +"}");
 };
 
+var player;
 var pressed;
 var overObject;
 
@@ -111,6 +114,7 @@ wizard({
     width: 160,
     height: 112,
     scale: 4,
+    fillScreen:true,
     pixelArt: true,
     create: function(){
         WIZARD.paths.setImagesPath("../assets/img/");
