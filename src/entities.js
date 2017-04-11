@@ -35,6 +35,9 @@ var entityChris = function(params){
                         //console.log("Path was not found.");
                     } else {
                         var count = 0;
+                        p.nextTileX = path[count].x;
+                        p.nextTileY = path[count].y;
+                        count++;
                         WIZARD.time.createTimer("easystar_" + p.id, 200, function () {
                             if (path[count] == null || easystarPath == null) return;
 
@@ -42,7 +45,7 @@ var entityChris = function(params){
                             p.nextTileY = path[count].y;
 
                             count++;
-                        }, path.length, true);
+                        }, path.length-1, true);
                     }
                 });
             }catch(e){
