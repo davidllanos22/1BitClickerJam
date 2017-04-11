@@ -48,16 +48,12 @@ var entityObject =  function(params){
         if(pressed){
           if (WIZARD.physics.intersects(this.body,bodyMouse)){
               estado = !estado;
-              overObject = false;
               incrementSpeed();
           }
-      }
-        if (WIZARD.physics.intersects(this.body,bodyMouse)){
-            overObject = true;
-        }else{
-            //overObject = false;
         }
-
+        if (WIZARD.physics.intersects(this.body,bodyMouse)){
+            overIcon = 1; //Icono Mano
+        }
     };
 };
 
@@ -94,6 +90,10 @@ var entityPortal = function(params){
                 player.body.x = player.targetX = this.sceneX * 16;
                 player.body.y = player.targetY = this.sceneY * 16;
             }
+        }
+
+        if (WIZARD.physics.intersects(this.body,bodyMouse)){
+            overIcon = 2; //Icono Puerta
         }
     };
 };
