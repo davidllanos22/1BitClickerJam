@@ -143,6 +143,7 @@ wizard({
 
         WIZARD.entity.create("player", entityChris);
         WIZARD.entity.create("object", entityObject);
+        WIZARD.entity.create("objectObservable", entityObjectObservable);
         WIZARD.entity.create("portal", entityPortal);
         WIZARD.entity.create("tile", entityTile);
 

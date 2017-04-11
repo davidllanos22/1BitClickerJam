@@ -42,12 +42,13 @@ var entityChris = function(params){
            }else{ // Camino a la derecha
                walking = "player_walk_right";
            }
+
         }
 
         if( Math.abs(this.targetX - this.body.x) < 1) { //Si llego a mi destino.
             walking = "player_idle_down";
         }
-        
+
         this.body.x = WIZARD.math.lerp(this.body.x, this.targetX, 0.01);
         this.body.y = WIZARD.math.lerp(this.body.y, this.targetY, 0.01);
 
@@ -66,20 +67,48 @@ var entityObject =  function(params){
         }else{
             wiz.drawSprite("tiles", this.body.x, this.body.y,1,1);
         }
+
     };
 
     this.update = function(wiz){
         if(pressed){
-          if (WIZARD.physics.intersects(this.body,bodyMouse)){
-              estado = !estado;
-              incrementSpeed();
-          }
+            if (WIZARD.physics.intersects(this.body,bodyMouse)){
+                estado = !estado;
+                incrementSpeed();
+            }
         }
         if (WIZARD.physics.intersects(this.body,bodyMouse)){
             overIcon = 1; //Icono Mano
         }
     };
 };
+
+var entityObjectObservable =  function(params){
+    this.body = WIZARD.physics.createAABB(params.x, params.y, 16,16);
+
+    var estado = false;
+
+
+    this.render = function(wiz){
+        if(estado){
+            wiz.drawSprite("tiles", this.body.x, this.body.y,1,0);
+        }else{
+            wiz.drawSprite("tiles", this.body.x, this.body.y,1,1);
+        }
+    };
+
+    this.update = function(wiz){
+        if(pressed){
+            if (WIZARD.physics.intersects(this.body,bodyMouse)){
+                //TODO mostrar mensaje
+            }
+        }
+        if (WIZARD.physics.intersects(this.body,bodyMouse)){
+            overIcon = 3; //Icono Lupa
+        }
+    };
+};
+
 
 var entityTile = function(params){
     this.x = params.x;
