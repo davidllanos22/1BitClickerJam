@@ -19,7 +19,7 @@ var mapHouse = {
             spriteSheetWidth: 16
         },
         { // Entities instances
-            data:[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 39, 0, 0, 0, 0, 0, 18, 0, 0, 0, 0, 17, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 18, 0, 0, 0, 0, 0, 0],
+            data:[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 39, 0, 0, 0, 0, 19, 18, 2, 2, 0, 0, 17, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 2, 2, 2, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 3, 2, 0, 0, 0, 0, 0, 2, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 18, 0, 0, 0, 0, 0, 0],
             mapHeight:10,
             mapWidth:10,
             spriteSheetWidth: 16
@@ -204,12 +204,17 @@ var mapLake = {
 
 
 var mapLoader = function(id, x, y, xx, yy, layer, sceneName){
+    var scene = WIZARD.scene.scenes[sceneName];
+    if(!scene.collisions) scene.collisions = [];
+    if(!scene.collisions[y]) scene.collisions[y] = [];
+
+    scene.collisions[y][x] = 0;
     if(id != -1){
-        if(id == 16) { //Player
-            player = WIZARD.entity.instantiateToScene("player", {x: x * 16, y: y * 16}, sceneName);
-        }if(id == 17) { //Object
-            WIZARD.entity.instantiateToScene("object", {x: x * 16, y: y * 16}, sceneName);
-        }if(id == 2) { //To Town
+
+        if(id == 1) { //Collision
+            scene.collisions[y][x] = 1;
+        }
+        if(id == 2) { //To Town
             WIZARD.entity.instantiateToScene("portal", {x: x * 16, y: y * 16, scene: "town", sceneX: 5, sceneY: 9, xx, yy}, sceneName);
         }if(id == 3) { //To House
             WIZARD.entity.instantiateToScene("portal", {x: x * 16, y: y * 16, scene: "house", sceneX: 8, sceneY: 5, xx, yy}, sceneName);
@@ -237,8 +242,11 @@ var mapLoader = function(id, x, y, xx, yy, layer, sceneName){
             WIZARD.entity.instantiateToScene("portal", {x: x * 16, y: y * 16, scene: "road_lake", sceneX: 4, sceneY: 1, xx, yy}, sceneName);
         }if(id == 15) { //Forest to road
             WIZARD.entity.instantiateToScene("portal", {x: x * 16, y: y * 16, scene: "road_lake", sceneX: 4, sceneY: 1, xx, yy}, sceneName);
+        }if(id == 16) { //Player
+            player = WIZARD.entity.instantiateToScene("player", {x: x * 16, y: y * 16}, sceneName);
+        }if(id == 17) { //Object
+            WIZARD.entity.instantiateToScene("object", {x: x * 16, y: y * 16}, sceneName);
         }else{
-            var scene = WIZARD.scene.scenes[sceneName];
             if(!scene.tiles) scene.tiles = [];
             if(!scene.tiles["layer" + layer]) scene.tiles["layer" + layer] = [];
             var tiles = scene.tiles["layer" + layer];

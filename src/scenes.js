@@ -2,7 +2,12 @@ var sceneHouse = {
     entities: [],
     tiles: [],
     onEnter: function(wiz){
-        console.log(this.name);
+        easystar.setGrid(this.collisions);
+        for(var i = 0; i < this.collisions.length; i++){
+            console.log(i + "__" + this.collisions[i].toString());
+        }
+
+
     },
     update: function(wiz){
 

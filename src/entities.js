@@ -10,8 +10,32 @@ var entityChris = function(params){
 
     this.update = function(wiz){
         if(pressed){
-            this.targetX = WIZARD.input.x / wiz.scale + WIZARD.camera.x;
-            this.targetY = WIZARD.input.y / wiz.scale + WIZARD.camera.y;
+            var tileX = Math.floor((WIZARD.input.x / wiz.scale + WIZARD.camera.x) / 16);
+            var tileY = Math.floor((WIZARD.input.y / wiz.scale + WIZARD.camera.y) / 16);
+
+            if( tileX >= WIZARD.scene.current.collisions[0].length ||
+                tileY >= WIZARD.scene.current.collisions.length ||
+                tileX < 0 ||
+                tileY < 0) return;
+
+            var x = Math.floor(this.body.x / 16);
+            var y = Math.floor(this.body.y / 16);
+            var p = this;
+
+            easystar.findPath(x, y, tileX, tileY, function(path){
+                    if (path === null) {
+                        console.log("Path was not found.");
+                    } else {
+                        var count = 0;
+                        WIZARD.time.createTimer("easystar_" + p.id, 150, function(){
+                            p.targetX = path[count].x * 16;
+                            p.targetY = path[count].y * 16;
+                            count++;
+                        }, path.length, true);
+                    }
+            });
+
+            easystar.calculate();
 
            if(this.body.x > this.targetX){ // Camino a la izquierda
                walking = "player_walk_left";
@@ -27,7 +51,7 @@ var entityChris = function(params){
         this.body.x = WIZARD.math.lerp(this.body.x, this.targetX, 0.01);
         this.body.y = WIZARD.math.lerp(this.body.y, this.targetY, 0.01);
 
-        WIZARD.camera.setPosition( this.body.x - wiz.width / 2,this.body.y - wiz.height / 2);
+        WIZARD.camera.setPosition(this.body.x - wiz.width / 2,this.body.y - wiz.height / 2);
     };
 };
 

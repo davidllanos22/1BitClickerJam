@@ -108,6 +108,11 @@ var player;
 var pressed;
 var overIcon;
 
+var easystar = new EasyStar.js();
+easystar.setAcceptableTiles([0]);
+easystar.enableDiagonals();
+easystar.setIterationsPerCalculation(1000);
+
 var bodyMouse = WIZARD.physics.createAABB(WIZARD.input.x, WIZARD.input.y, 1,1);
 
 wizard({
