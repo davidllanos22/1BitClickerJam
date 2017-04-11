@@ -1,16 +1,13 @@
 var entityChris = function(params){
     this.body = WIZARD.physics.createAABB(params.x, params.y, 16, 16);
-    this.targetX = params.x;
-    this.targetY = params.y;
     var animation = "player_idle_down";
-    var pathId;
 
     var currentTileX = Math.floor(this.body.x / 16);
     var currentTileY = Math.floor(this.body.y / 16);
     var targetTileX = currentTileX;
     var targetTileY = currentTileY;
-    var nextTileX = currentTileX;
-    var nextTileY = currentTileY;
+    this.nextTileX = currentTileX;
+    this.nextTileY = currentTileY;
 
     this.render = function(wiz){
         wiz.drawAnimation("player", animation, this.body.x, this.body.y);
@@ -31,30 +28,34 @@ var entityChris = function(params){
 
             var p = this;
 
-            if(pathId) easystar.cancelPath(pathId);
-            pathId = easystar.findPath(currentTileX, currentTileY, targetTileX, targetTileY, function(path){
+            cancelPath();
+            try {
+                easystarPath = easystar.findPath(currentTileX, currentTileY, targetTileX, targetTileY, function (path) {
                     if (path === null) {
                         //console.log("Path was not found.");
                     } else {
                         var count = 0;
-                        WIZARD.time.createTimer("easystar_" + p.id, 200, function(){
-                            if(path[count] == null) return;
+                        WIZARD.time.createTimer("easystar_" + p.id, 200, function () {
+                            if (path[count] == null || easystarPath == null) return;
 
-                            nextTileX = path[count].x;
-                            nextTileY = path[count].y;
+                            p.nextTileX = path[count].x;
+                            p.nextTileY = path[count].y;
 
                             count++;
                         }, path.length, true);
                     }
-            });
+                });
+            }catch(e){
+                console.log(e);
+            }
 
             easystar.calculate();
         }
 
 
-        if( nextTileX < currentTileX){ // Camino a la izquierda
+        if(this.nextTileX < currentTileX){ // Camino a la izquierda
             animation = "player_walk_left";
-        }if( nextTileX > currentTileX){ // Camino a la derecha
+        }if(this.nextTileX > currentTileX){ // Camino a la derecha
             animation = "player_walk_right";
         }
 
@@ -62,8 +63,8 @@ var entityChris = function(params){
             animation = "player_idle_down";
         }
 
-        this.body.x = WIZARD.math.lerp(this.body.x, nextTileX * 16, 0.5);
-        this.body.y = WIZARD.math.lerp(this.body.y, nextTileY * 16, 0.5);
+        this.body.x = WIZARD.math.lerp(this.body.x, this.nextTileX * 16, 0.5);
+        this.body.y = WIZARD.math.lerp(this.body.y, this.nextTileY * 16, 0.5);
 
         WIZARD.camera.setPosition(this.body.x - wiz.width / 2,this.body.y - wiz.height / 2);
     };
@@ -161,11 +162,14 @@ var entityPortal = function(params){
         if(pressed) {
             if (WIZARD.physics.intersects(this.body, bodyMouse)) {
                 var index = WIZARD.scene.current.entities.indexOf(player);
+                cancelPath();
                 WIZARD.scene.current.entities.splice(index,1);
                 WIZARD.scene.setCurrent(this.scene, 0, this);
                 WIZARD.scene.current.entities.push(player);
-                player.body.x = player.targetX = this.sceneX * 16;
-                player.body.y = player.targetY = this.sceneY * 16;
+                player.nextTileX = this.sceneX;
+                player.nextTileY = this.sceneY;
+                player.body.x = this.sceneX * 16;
+                player.body.y = this.sceneY * 16;
             }
         }
 

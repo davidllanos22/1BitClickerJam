@@ -109,6 +109,7 @@ var pressed;
 var overIcon;
 
 var easystar = new EasyStar.js();
+var easystarPath;
 easystar.setAcceptableTiles([0]);
 //easystar.enableDiagonals();
 easystar.enableCornerCutting();
@@ -208,3 +209,9 @@ wizard({
         overIcon = 0;
     }
 }).play();
+
+
+var cancelPath = function(){
+    if(easystarPath) easystar.cancelPath(easystarPath);
+    easystarPath = null;
+};

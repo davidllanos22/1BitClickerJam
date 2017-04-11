@@ -25,6 +25,7 @@ var sceneTown = {
     entities: [],
     tiles: [],
     onEnter: function(wiz){
+        easystar.setGrid(this.collisions);
         console.log(this.name);
     },
     update: function(wiz){
@@ -41,6 +42,7 @@ var sceneRoadLake = {
     entities: [],
     tiles: [],
     onEnter: function(wiz){
+        easystar.setGrid(this.collisions);
         console.log(this.name);
     },
     update: function(wiz){
@@ -57,6 +59,7 @@ var sceneInstitute = {
     entities: [],
     tiles: [],
     onEnter: function(wiz){
+        easystar.setGrid(this.collisions);
         console.log(this.name);
     },
     update: function(wiz){
@@ -73,6 +76,7 @@ var sceneRoadIns = {
     entities: [],
     tiles: [],
     onEnter: function(wiz){
+        easystar.setGrid(this.collisions);
         console.log(this.name);
     },
     update: function(wiz){
@@ -89,6 +93,7 @@ var sceneForest = {
     entities: [],
     tiles: [],
     onEnter: function(wiz){
+        easystar.setGrid(this.collisions);
         console.log(this.name);
     },
     update: function(wiz){
@@ -105,6 +110,7 @@ var sceneLake = {
     entities: [],
     tiles: [],
     onEnter: function(wiz){
+        easystar.setGrid(this.collisions);
         console.log(this.name);
     },
     update: function(wiz){
