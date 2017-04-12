@@ -9,19 +9,27 @@ var incrementSpeed = function () {
     speedMemory *= 1.2;
 };
 
+var ICON = {
+    DEFAULT: 0,
+    HAND: 1,
+    DOOR: 2,
+    INSPECT: 3,
+    TALK: 4
+};
+
 
 var scrollingText = {
     textToShow: "",
     count: 0,
     show: function(text, x, y, wiz){
         var speed = 50;
-        var thiz = this;
+        var instance = this;
         WIZARD.time.createTimer("scrollingText", speed, function(){
             //wiz.playSound("talk");
-            thiz.textToShow = text.substr(0, thiz.count );
-            thiz.count++;
+            instance.textToShow = text.substr(0, instance.count );
+            instance.count++;
         }, text.length + 1, false);
-        wiz.drawText(thiz.textToShow, x, y, "font");
+        wiz.drawText(instance.textToShow, x, y, "font");
 
     },
     reset: function(){

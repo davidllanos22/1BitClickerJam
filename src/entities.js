@@ -56,20 +56,22 @@ var entityChris = function(params){
         }
 
 
-        if(this.nextTileX < currentTileX){ // Camino a la izquierda
+        if(this.nextTileX < currentTileX && this.nextTileY == currentTileY){ // Camino a la izquierda
             animation = "player_walk_left";
-        }if(this.nextTileX > currentTileX){ // Camino a la derecha
+        }else if(this.nextTileX > currentTileX && this.nextTileY == currentTileY){ // Camino a la derecha
             animation = "player_walk_right";
-        }
-
-        if(targetTileX == currentTileX){ // Reset
+        }else if(this.nextTileY > currentTileY && this.nextTileX == currentTileX){ // Camino abajo
+            animation = "player_walk_down";
+        }else if(this.nextTileY < currentTileY && this.nextTileX == currentTileX){ // Camino arriba
+            animation = "player_walk_up";
+        }else if(targetTileX == currentTileX && targetTileY == currentTileY){ // Reset
             animation = "player_idle_down";
         }
 
         this.body.x = WIZARD.math.lerp(this.body.x, this.nextTileX * 16, 0.04);
         this.body.y = WIZARD.math.lerp(this.body.y, this.nextTileY * 16, 0.04);
 
-        WIZARD.camera.setPosition(this.body.x - wiz.width / 2,this.body.y - wiz.height / 2);
+        WIZARD.camera.setPosition(this.body.x - wiz.width / 2, this.body.y - wiz.height / 2);
     };
 };
 
@@ -95,7 +97,7 @@ var entityObject =  function(params){
             }
         }
         if (WIZARD.physics.intersects(this.body,bodyMouse)){
-            overIcon = 1; //Icono Mano
+            overIcon = ICON.HAND;
         }
     };
 };
@@ -117,7 +119,7 @@ var entityObjectObservable =  function(params){
             }
         }
         if (WIZARD.physics.intersects(this.body,bodyMouse)){
-            overIcon = 3; //Icono Lupa
+            overIcon = ICON.INSPECT;
         }
     };
 };
@@ -140,7 +142,7 @@ var entityNpc =  function(params){
             }
         }
         if (WIZARD.physics.intersects(this.body,bodyMouse)){
-            overIcon = 4; //Icono Talk
+            overIcon = ICON.TALK;
         }
     };
 };
@@ -184,7 +186,7 @@ var entityPortal = function(params){
         }
 
         if (WIZARD.physics.intersects(this.body,bodyMouse)){
-            overIcon = 2; //Icono Puerta
+            overIcon = ICON.DOOR;
         }
     };
 };
@@ -198,4 +200,4 @@ var showTextEntity = function(id, string){
     textToShow[indexText] = string;
     showText=true;
 
-}
+};
