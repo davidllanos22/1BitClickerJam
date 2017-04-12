@@ -17,7 +17,6 @@ var ICON = {
     TALK: 4
 };
 
-
 var scrollingText = {
     textToShow: "",
     count: 0,
@@ -37,6 +36,41 @@ var scrollingText = {
         this.count = 0;
         if(WIZARD.timers["scrollingText"] != null) delete WIZARD.timers["scrollingText"];
     }
+};
+
+var FADE_COLOR = {
+    NONE: 0,
+    LIGHT: 1,
+    DARK: -1,
+};
+
+var fading = false;
+var fadeColor = FADE_COLOR.NONE;
+var fadeTime = 0;
+
+var fadeScreen = function(from, to, time){
+    if(fading) return;
+    fading = true;
+    fadeTime = 0;
+    fadeColor = to;
+
+    if(to == FADE_COLOR.NONE) fadeColor = from;
+
+    var inverted = true;
+
+    if(from == FADE_COLOR.NONE) inverted = false;
+
+    var times = (time / 10);
+    var count = 0;
+
+
+    WIZARD.time.createTimer("fade", 10, function () {
+        count++;
+        if(count == times){
+            fading = false;
+        }
+        fadeTime = inverted ? 1 - (count / times) : count / times;
+    }, times, true);
 };
 
 

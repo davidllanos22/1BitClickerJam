@@ -2,19 +2,14 @@ var sceneHouse = {
     entities: [],
     tiles: [],
     onEnter: function(wiz){
+        fadeScreen(FADE_COLOR.DARK, FADE_COLOR.NONE, 600);
         easystar.setGrid(this.collisions);
-        for(var i = 0; i < this.collisions.length; i++){
-            console.log(i + "__" + this.collisions[i].toString());
-        }
-
-
+        console.log(this.name);
     },
     update: function(wiz){
-
         WIZARD.scene.updateEntities(this, wiz);
     },
     render: function(wiz){
-
         WIZARD.scene.renderEntitiesAndLayers(this, wiz);
     },
     onExit: function(wiz){
@@ -25,6 +20,7 @@ var sceneTown = {
     entities: [],
     tiles: [],
     onEnter: function(wiz){
+        fadeScreen(FADE_COLOR.DARK, FADE_COLOR.NONE, 600);
         easystar.setGrid(this.collisions);
         console.log(this.name);
     },
@@ -42,6 +38,7 @@ var sceneRoadLake = {
     entities: [],
     tiles: [],
     onEnter: function(wiz){
+        fadeScreen(FADE_COLOR.DARK, FADE_COLOR.NONE, 600);
         easystar.setGrid(this.collisions);
         console.log(this.name);
     },
@@ -59,6 +56,7 @@ var sceneInstitute = {
     entities: [],
     tiles: [],
     onEnter: function(wiz){
+        fadeScreen(FADE_COLOR.DARK, FADE_COLOR.NONE, 600);
         easystar.setGrid(this.collisions);
         console.log(this.name);
     },
@@ -76,6 +74,7 @@ var sceneRoadIns = {
     entities: [],
     tiles: [],
     onEnter: function(wiz){
+        fadeScreen(FADE_COLOR.DARK, FADE_COLOR.NONE, 600);
         easystar.setGrid(this.collisions);
         console.log(this.name);
     },
@@ -93,6 +92,7 @@ var sceneForest = {
     entities: [],
     tiles: [],
     onEnter: function(wiz){
+        fadeScreen(FADE_COLOR.DARK, FADE_COLOR.NONE, 600);
         easystar.setGrid(this.collisions);
         console.log(this.name);
     },
@@ -110,6 +110,7 @@ var sceneLake = {
     entities: [],
     tiles: [],
     onEnter: function(wiz){
+        fadeScreen(FADE_COLOR.DARK, FADE_COLOR.NONE, 600);
         easystar.setGrid(this.collisions);
         console.log(this.name);
     },

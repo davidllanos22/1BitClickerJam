@@ -27,8 +27,11 @@ varying vec2 f_texcoord;
 uniform sampler2D u_image;
 uniform sampler2D u_texture;
 uniform float u_time;
-uniform vec4 u_swapColorA;
-uniform vec4 u_swapColorB;
+uniform vec4 u_swapColorLight;
+uniform vec4 u_swapColorDark;
+
+uniform float u_fadeDirection;
+uniform float u_fadeAmount;
 
 
 float random(in vec2 st){
@@ -61,11 +64,19 @@ void main() {
     // Get texel
     vec4 color = texture2D(u_texture, vec2(tc.x, tc.y));
     
-    // Replace colors
-    if(color.r < 1.0)
-        color = u_swapColorA;
-    else
-        color = u_swapColorB;
+    
+    //Replace colors
+    if(color.r < 1.0){
+        color = u_swapColorLight;
+    }else{
+        color = u_swapColorDark;
+    }
+    
+    if(u_fadeDirection > 0.0){ // Fade to Light
+        color = mix(color, u_swapColorDark, u_fadeAmount);
+    }else if(u_fadeDirection < 0.0){ // Fade to Dark
+        color = mix(color, u_swapColorLight, u_fadeAmount); 
+    }
     
     // Add scanlines
     vec4 cta = color;
@@ -75,8 +86,9 @@ void main() {
         
     float r = random(tc * u_time);
     vec4 noise = vec4(vec3(r) * 2.0,1.0);
+    
 
-    gl_FragColor = cta * color * noise;
+    gl_FragColor = (cta * color * noise) ;
 }
 `;
 
@@ -191,9 +203,12 @@ wizard({
     },
 
     update: function(){
+        this.gl.uniform4f(WIZARD.shader.getUniform("shader", "u_swapColorLight"), rA, gA, bA, 1);
+        this.gl.uniform4f(WIZARD.shader.getUniform("shader", "u_swapColorDark"), rB, gB, bB, 1);
         this.gl.uniform1f(WIZARD.shader.getUniform("shader", "u_time"), time);
-        this.gl.uniform4f(WIZARD.shader.getUniform("shader", "u_swapColorA"), rA, gA, bA, 1);
-        this.gl.uniform4f(WIZARD.shader.getUniform("shader", "u_swapColorB"), rB, gB, bB, 1);
+        this.gl.uniform1f(WIZARD.shader.getUniform("shader", "u_fadeDirection"), fadeColor);
+        this.gl.uniform1f(WIZARD.shader.getUniform("shader", "u_fadeAmount"), fadeTime);
+
         time += 0.0001;
         if(time > 2) time = 1;
 
@@ -227,6 +242,9 @@ wizard({
         this.drawSprite("mouse", bodyMouse.x, bodyMouse.y, overIcon, 0);
     }
 }).play();
+
+
+
 
 
 

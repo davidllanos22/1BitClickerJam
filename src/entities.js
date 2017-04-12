@@ -178,14 +178,19 @@ var entityPortal = function(params){
     this.interact = function(){
         var index = WIZARD.scene.current.entities.indexOf(player);
         player.cancelPath();
-        console.log(this);
-        WIZARD.scene.current.entities.splice(index,1);
-        WIZARD.scene.setCurrent(this.scene, 0, this);
-        WIZARD.scene.current.entities.push(player);
-        player.nextTileX = this.sceneX;
-        player.nextTileY = this.sceneY;
-        player.body.x = this.sceneX * 16;
-        player.body.y = this.sceneY * 16;
+        var instance = this;
+        var lastScene = WIZARD.scene.current;
+        fadeScreen(FADE_COLOR.NONE, FADE_COLOR.DARK, 600);
+        WIZARD.scene.setCurrent(this.scene, 1000, this, function(){
+            lastScene.entities.splice(index, 1);
+            player.nextTileX = instance.sceneX;
+            player.nextTileY = instance.sceneY;
+            player.body.x = instance.sceneX * 16;
+            player.body.y = instance.sceneY * 16;
+            WIZARD.scene.current.entities.push(player);
+
+        });
+
     };
 
     this.render = function(wiz){
