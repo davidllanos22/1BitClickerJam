@@ -50,19 +50,14 @@ var fadeTime = 0;
 
 var fadeScreen = function(from, to, time){
     if(fading) return;
-    fading = true;
-    fadeTime = 0;
-    fadeColor = to;
-
-    if(to == FADE_COLOR.NONE) fadeColor = from;
-
-    var inverted = true;
-
-    if(from == FADE_COLOR.NONE) inverted = false;
-
     var times = (time / 10);
     var count = 0;
-
+    var inverted = true;
+    fading = true;
+    fadeColor = to;
+    if(to == FADE_COLOR.NONE) fadeColor = from;
+    if(from == FADE_COLOR.NONE) inverted = false;
+    fadeTime = inverted ? 1 - (count / times) : count / times;
 
     WIZARD.time.createTimer("fade", 10, function () {
         count++;
