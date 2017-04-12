@@ -116,7 +116,7 @@ var easystar = new EasyStar.js();
 var easystarPath;
 easystar.setAcceptableTiles([0]);
 //easystar.enableDiagonals();
-easystar.enableCornerCutting();
+//easystar.enableCornerCutting();
 easystar.setIterationsPerCalculation(100);
 
 var bodyMouse = WIZARD.physics.createAABB(WIZARD.input.x, WIZARD.input.y, 1,1);

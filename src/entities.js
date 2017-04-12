@@ -14,8 +14,8 @@ var entityChris = function(params){
     };
 
     this.update = function(wiz){
-        currentTileX = Math.floor(this.body.x / 16);
-        currentTileY = Math.floor(this.body.y / 16);
+        currentTileX = Math.floor((this.body.x + 0.5) / 16);
+        currentTileY = Math.floor((this.body.y + 0.5) / 16);
 
         if(pressed){
             targetTileX = Math.floor((WIZARD.input.x / wiz.scale + WIZARD.camera.x) / 16);
@@ -66,8 +66,8 @@ var entityChris = function(params){
             animation = "player_idle_down";
         }
 
-        this.body.x = WIZARD.math.lerp(this.body.x, this.nextTileX * 16, 0.5);
-        this.body.y = WIZARD.math.lerp(this.body.y, this.nextTileY * 16, 0.5);
+        this.body.x = WIZARD.math.lerp(this.body.x, this.nextTileX * 16, 0.04);
+        this.body.y = WIZARD.math.lerp(this.body.y, this.nextTileY * 16, 0.04);
 
         WIZARD.camera.setPosition(this.body.x - wiz.width / 2,this.body.y - wiz.height / 2);
     };
