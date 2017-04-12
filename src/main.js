@@ -109,8 +109,11 @@ var pressed;
 var overIcon;
 var textToShow = [""];
 var indexText = 0;
-var showText;
+var showingText;
 var idEntityText;
+
+var overEntity = false;
+var interacting = false;
 
 var easystar = new EasyStar.js();
 var easystarPath;
@@ -199,7 +202,15 @@ wizard({
 
         pressed = WIZARD.input.mouseJustPressed(0);
 
+        overEntity = overIcon != ICON.DEFAULT;
+        overIcon = ICON.DEFAULT;
+
         WIZARD.scene.current.update(this);
+
+        if(showingText && pressed){
+            showingText = false;
+            scrollingText.reset();
+        }
 
 
         if(WIZARD.input.keyJustPressed(WIZARD.keys.ESC)){
@@ -210,18 +221,12 @@ wizard({
         this.clear("#000");
         WIZARD.scene.current.render(this);
         this.drawText("Mem:" + Math.floor(memory) + "%", WIZARD.camera.x, WIZARD.camera.y, "font");
-        if(showText){
+        if(showingText){
             scrollingText.show(textToShow[indexText], WIZARD.camera.x, WIZARD.camera.y + 90, this);
         }
         this.drawSprite("mouse", bodyMouse.x, bodyMouse.y, overIcon, 0);
-
-        overIcon = ICON.DEFAULT;
-
     }
 }).play();
 
 
-var cancelPath = function(){
-    if(easystarPath) easystar.cancelPath(easystarPath);
-    easystarPath = null;
-};
+

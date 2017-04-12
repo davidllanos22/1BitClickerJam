@@ -2,22 +2,76 @@ var entityChris = function(params){
     this.body = WIZARD.physics.createAABB(params.x, params.y, 16, 16);
     var animation = "player_idle_down";
 
-    var currentTileX = Math.floor(this.body.x / 16);
-    var currentTileY = Math.floor(this.body.y / 16);
-    var targetTileX = currentTileX;
-    var targetTileY = currentTileY;
-    this.nextTileX = currentTileX;
-    this.nextTileY = currentTileY;
+    this.currentTileX = Math.floor(this.body.x / 16);
+    this.currentTileY = Math.floor(this.body.y / 16);
+    var targetTileX = this.currentTileX;
+    var targetTileY = this.currentTileY;
+    this.nextTileX = this.currentTileX;
+    this.nextTileY = this.currentTileY;
+
+    this.cancelPath = function(){
+        //if(easystarPath) easystar.cancelPath(easystarPath);
+        this.nextTileX = this.currentTileX;
+        this.nextTileY = this.currentTileY;
+        targetTileX = this.currentTileX;
+        targetTileY = this.currentTileY;
+        easystarPath = null;
+        WIZARD.time.removeTimer("easystar");
+    };
+
+    this.moveTo = function(tileX, tileY, callback){
+        var p = this;
+
+        this.cancelPath();
+        try {
+            easystarPath = easystar.findPath(this.currentTileX, this.currentTileY, tileX, tileY, function (path) {
+                targetTileX = tileX;
+                targetTileY = tileY;
+                if (path === null) {
+                    console.log("Path was not found. From: " + p.currentTileX + "," + p.currentTileY + " to " + tileX + "," + tileY);
+                } else {
+                    var count = 0;
+                    if(path.length == 0 && callback){
+                        // Pequeño delay, para que de tiempo a llegar bien al tile
+                        WIZARD.time.createTimer("easystarCallbackDelay", 300, function () {
+                            callback();
+                        }, 1, true);
+                    }
+                    if (path[count] == null) return;
+                    p.nextTileX = path[count].x;
+                    p.nextTileY = path[count].y;
+                    count++;
+                    WIZARD.time.createTimer("easystar", 200, function () {
+                        if (path[count] == null) return;
+                        p.nextTileX = path[count].x;
+                        p.nextTileY = path[count].y;
+
+                        count++;
+                        if(count == path.length && callback) {
+                            // Pequeño delay, para que de tiempo a llegar bien al tile
+                            WIZARD.time.createTimer("easystarCallbackDelay", 300, function () {
+                                callback();
+                            }, 1, true);
+                        }
+                    }, path.length - 1, true);
+                }
+            });
+        }catch(e){
+            console.log(e);
+        }
+
+        easystar.calculate();
+    };
 
     this.render = function(wiz){
         wiz.drawAnimation("player", animation, this.body.x, this.body.y);
     };
 
     this.update = function(wiz){
-        currentTileX = Math.floor((this.body.x + 0.5) / 16);
-        currentTileY = Math.floor((this.body.y + 0.5) / 16);
+        this.currentTileX = Math.floor((this.body.x + 0.5) / 16);
+        this.currentTileY = Math.floor((this.body.y + 0.5) / 16);
 
-        if(pressed){
+        if(pressed && !overEntity && !showingText){
             targetTileX = Math.floor((WIZARD.input.x / wiz.scale + WIZARD.camera.x) / 16);
             targetTileY = Math.floor((WIZARD.input.y / wiz.scale + WIZARD.camera.y) / 16);
 
@@ -26,45 +80,19 @@ var entityChris = function(params){
                 targetTileX < 0 ||
                 targetTileY < 0) return;
 
-            var p = this;
-
-            cancelPath();
-            try {
-                easystarPath = easystar.findPath(currentTileX, currentTileY, targetTileX, targetTileY, function (path) {
-                    if (path === null) {
-                        //console.log("Path was not found.");
-                    } else {
-                        var count = 0;
-                        p.nextTileX = path[count].x;
-                        p.nextTileY = path[count].y;
-                        count++;
-                        WIZARD.time.createTimer("easystar_" + p.id, 200, function () {
-                            if (path[count] == null || easystarPath == null) return;
-
-                            p.nextTileX = path[count].x;
-                            p.nextTileY = path[count].y;
-
-                            count++;
-                        }, path.length-1, true);
-                    }
-                });
-            }catch(e){
-                console.log(e);
-            }
-
-            easystar.calculate();
+            this.moveTo(targetTileX, targetTileY);
         }
 
 
-        if(this.nextTileX < currentTileX && this.nextTileY == currentTileY){ // Camino a la izquierda
+        if(this.nextTileX < this.currentTileX && this.nextTileY == this.currentTileY){ // Camino a la izquierda
             animation = "player_walk_left";
-        }else if(this.nextTileX > currentTileX && this.nextTileY == currentTileY){ // Camino a la derecha
+        }else if(this.nextTileX > this.currentTileX && this.nextTileY == this.currentTileY){ // Camino a la derecha
             animation = "player_walk_right";
-        }else if(this.nextTileY > currentTileY && this.nextTileX == currentTileX){ // Camino abajo
+        }else if(this.nextTileY > this.currentTileY && this.nextTileX == this.currentTileX){ // Camino abajo
             animation = "player_walk_down";
-        }else if(this.nextTileY < currentTileY && this.nextTileX == currentTileX){ // Camino arriba
+        }else if(this.nextTileY < this.currentTileY && this.nextTileX == this.currentTileX){ // Camino arriba
             animation = "player_walk_up";
-        }else if(targetTileX == currentTileX && targetTileY == currentTileY){ // Reset
+        }else if(targetTileX == this.currentTileX && targetTileY == this.currentTileY){ // Reset
             animation = "player_idle_down";
         }
 
@@ -80,6 +108,10 @@ var entityObject =  function(params){
 
     var estado = false;
 
+    this.interact = function(){
+        estado = !estado;
+    };
+
     this.render = function(wiz){
         if(estado){
             wiz.drawSprite("tiles", this.body.x, this.body.y,1,0);
@@ -90,13 +122,8 @@ var entityObject =  function(params){
     };
 
     this.update = function(wiz){
-        if(pressed){
-            if (WIZARD.physics.intersects(this.body,bodyMouse)){
-                estado = !estado;
-                incrementSpeed();
-            }
-        }
-        if (WIZARD.physics.intersects(this.body,bodyMouse)){
+        if (WIZARD.physics.intersects(this.body, bodyMouse)){
+            if(pressed) moveToEntityAndInteract(this);
             overIcon = ICON.HAND;
         }
     };
@@ -104,21 +131,18 @@ var entityObject =  function(params){
 
 var entityObjectObservable =  function(params){
     this.body = WIZARD.physics.createAABB(params.x, params.y, 16,16);
+
+    this.interact = function(){
+        showTextEntity(this.id, "Un libro que habla!");
+    };
+
     this.render = function(wiz){
         wiz.drawSprite("tiles", this.body.x, this.body.y,3,1);
     };
 
     this.update = function(wiz){
-        if(pressed){
-            if(idEntityText == this.id){
-                showText=false;
-                scrollingText.reset();
-            }
-            if (WIZARD.physics.intersects(this.body,bodyMouse)){
-                showTextEntity(this.id, "Un libro que habla!");
-            }
-        }
-        if (WIZARD.physics.intersects(this.body,bodyMouse)){
+        if (WIZARD.physics.intersects(this.body, bodyMouse)){
+            if(pressed) moveToEntityAndInteract(this);
             overIcon = ICON.INSPECT;
         }
     };
@@ -127,22 +151,51 @@ var entityObjectObservable =  function(params){
 var entityNpc =  function(params){
     this.body = WIZARD.physics.createAABB(params.x, params.y, 16,16);
 
+    this.interact = function(){
+        showTextEntity(this.id, "Hola, moriras.");
+    };
+
     this.render = function(wiz){
         wiz.drawSprite("npc", this.body.x, this.body.y,0,0);
     };
 
     this.update = function(wiz){
-        if(pressed){
-            if(idEntityText == this.id){
-                showText=false;
-                scrollingText.reset();
-            }
-            if (WIZARD.physics.intersects(this.body,bodyMouse)){
-                showTextEntity(this.id, "Hola, moriras.");
-            }
-        }
-        if (WIZARD.physics.intersects(this.body,bodyMouse)){
+        if (WIZARD.physics.intersects(this.body, bodyMouse)){
+            if(pressed) moveToEntityAndInteract(this);
             overIcon = ICON.TALK;
+        }
+    };
+};
+
+var entityPortal = function(params){
+    this.body = WIZARD.physics.createAABB(params.x, params.y, 16,16);
+    this.scene = params.scene;
+    this.sceneX  = params.sceneX;
+    this.sceneY = params.sceneY;
+    this.xx = params.xx;
+    this.yy = params.yy;
+
+    this.interact = function(){
+        var index = WIZARD.scene.current.entities.indexOf(player);
+        player.cancelPath();
+        console.log(this);
+        WIZARD.scene.current.entities.splice(index,1);
+        WIZARD.scene.setCurrent(this.scene, 0, this);
+        WIZARD.scene.current.entities.push(player);
+        player.nextTileX = this.sceneX;
+        player.nextTileY = this.sceneY;
+        player.body.x = this.sceneX * 16;
+        player.body.y = this.sceneY * 16;
+    };
+
+    this.render = function(wiz){
+        wiz.drawSprite("tiles", this.body.x, this.body.y, this.xx, this.yy);
+    };
+
+    this.update = function(wiz){
+        if (WIZARD.physics.intersects(this.body, bodyMouse)) {
+            if(pressed) moveToEntityAndInteract(this);
+            overIcon = ICON.DOOR;
         }
     };
 };
@@ -157,47 +210,51 @@ var entityTile = function(params){
     }
 };
 
-var entityPortal = function(params){
-    this.body = WIZARD.physics.createAABB(params.x, params.y, 16,16);
-    this.scene = params.scene;
-    this.sceneX  = params.sceneX;
-    this.sceneY = params.sceneY;
-    this.xx = params.xx;
-    this.yy = params.yy;
 
-    this.render = function(wiz){
-        wiz.drawSprite("tiles", this.body.x, this.body.y, this.xx, this.yy);
-    };
 
-    this.update = function(wiz){
+var moveToEntityAndInteract = function(entity){
+    if(showingText) return;
+    var x = Math.floor(entity.body.x / 16);
+    var y = Math.floor(entity.body.y / 16);
+    var tile = getSurroundingFreeTile(x, y);
+    player.moveTo(tile.x, tile.y, function(){
+        entity.interact();
+    });
+};
 
-        if(pressed) {
-            if (WIZARD.physics.intersects(this.body, bodyMouse)) {
-                var index = WIZARD.scene.current.entities.indexOf(player);
-                cancelPath();
-                WIZARD.scene.current.entities.splice(index,1);
-                WIZARD.scene.setCurrent(this.scene, 0, this);
-                WIZARD.scene.current.entities.push(player);
-                player.nextTileX = this.sceneX;
-                player.nextTileY = this.sceneY;
-                player.body.x = this.sceneX * 16;
-                player.body.y = this.sceneY * 16;
-            }
-        }
+var getSurroundingFreeTile = function(centerX, centerY){
+    //TODO: Tener en cuenta la posición del player respecto al tile. Para no hacer que se coloque arriba si viene de abajo, por ejemplo.
+    var pX = player.currentTileX;
+    var pY = player.currentTileY;
 
-        if (WIZARD.physics.intersects(this.body,bodyMouse)){
-            overIcon = ICON.DOOR;
-        }
-    };
+    var tile = {x:centerX, y:centerY};
+    //
+    // if(pX > centerX){ // Viene de la derecha
+    //     if(isFreeTile(centerX + 1, centerY)) tile.x += 1;
+    // }else if(pX < centerX){ // Viene de la izquierda
+    //     if(isFreeTile(centerX - 1, centerY)) tile.x -= 1;
+    // }
+    //
+    // if(pY > centerY){ // Viene de arriba
+    //     if(isFreeTile(centerX, centerY - 1)) tile.y -= 1;
+    // }else if(pY < centerY){ // Viene de abajo
+    //     if(isFreeTile(centerX, centerY + 1)) tile.y += 1;
+    // }
+
+    if(isFreeTile(centerX + 1, centerY)) tile.x += 1;
+    else if(isFreeTile(centerX - 1, centerY)) tile.x -= 1;
+    else if(isFreeTile(centerX, centerY - 1)) tile.y -= 1;
+    else if(isFreeTile(centerX, centerY + 1)) tile.y += 1;
+
+    return tile;
 };
 
 var showTextEntity = function(id, string){
-    if(showText){
-        return;
-    }
+    if(showingText)return;
+
     idEntityText = id;
     indexText++;
     textToShow[indexText] = string;
-    showText=true;
+    showingText = true;
 
 };
