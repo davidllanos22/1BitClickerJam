@@ -10,7 +10,6 @@ var entityChris = function(params){
     this.nextTileY = this.currentTileY;
 
     this.cancelPath = function(){
-        //if(easystarPath) easystar.cancelPath(easystarPath);
         this.nextTileX = this.currentTileX;
         this.nextTileY = this.currentTileY;
         targetTileX = this.currentTileX;
@@ -107,14 +106,20 @@ var entityChris = function(params){
 var entityObject =  function(params){
     this.body = WIZARD.physics.createAABB(params.x, params.y, 16,16);
     this.strings = strings.getString("apple");
+    this.xx = params.xx;
+    this.yy = params.yy;
 
     var estado = false;
+    var instance = this;
 
     this.interact = function(){
-        if(progress.estadoManzana) showDialogue([this.strings[1]]);
+        if(params.interact) params.interact({scene: WIZARD.scene.current.name});
         else {
-            showDialogue([this.strings[0]]);
-            progress.estadoManzana = !progress.estadoManzana;
+            if (progress.estadoManzana) showDialogue([instance.strings[1]]);
+            else {
+                showDialogue([instance.strings[0]]);
+                progress.estadoManzana = !progress.estadoManzana;
+            }
         }
     };
 
@@ -122,7 +127,7 @@ var entityObject =  function(params){
         if(progress.estadoManzana){
             wiz.drawSprite("tiles", this.body.x, this.body.y,15,2);
         }else{
-            wiz.drawSprite("tiles", this.body.x, this.body.y,1,1);
+            wiz.drawSprite("tiles", this.body.x, this.body.y, this.xx, this.yy);
         }
 
     };

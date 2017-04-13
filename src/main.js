@@ -143,9 +143,15 @@ wizard({
         WIZARD.paths.setDataPath("./assets/data/");
         WIZARD.paths.setSoundsPath("./assets/sound/");
 
-        this.loadImages("bg.png", "font.png", "tiles.png", "npc.png" ,"player.png", "mouse.png");
+        this.loadImages("bg.png", "font.png", "tiles.png", "npc.png" ,"player.png", "mouse.png", "puzzle2.png");
 
         WIZARD.spritesheet.create("player", 16, 16);
+        WIZARD.spritesheet.create("font", 8, 8);
+        WIZARD.spritesheet.create("player", 16, 16);
+        WIZARD.spritesheet.create("tiles", 16, 16);
+        WIZARD.spritesheet.create("npc", 16, 16);
+        WIZARD.spritesheet.create("mouse", 16, 16);
+        WIZARD.spritesheet.create("puzzle2", 32, 32);
 
         WIZARD.animation.createFrameAnimation("player_idle_down", [[0,0],[1,0], [2,0]], 200);
         WIZARD.animation.createFrameAnimation("player_walk_right", [[0,1], [1,1],[0,1],[2,1]], 200);
@@ -155,11 +161,6 @@ wizard({
 
         WIZARD.animation.createFrameAnimation("dialogue_blink", [[15,2], [15,3]], 250);
 
-        WIZARD.spritesheet.create("font", 8, 8);
-        WIZARD.spritesheet.create("player", 16, 16);
-        WIZARD.spritesheet.create("tiles", 16, 16);
-        WIZARD.spritesheet.create("npc", 16, 16);
-        WIZARD.spritesheet.create("mouse", 16, 16);
         WIZARD.shader.create("shader", vs, fs2);
         WIZARD.shader.setCurrent("shader");
 
@@ -186,6 +187,7 @@ wizard({
         WIZARD.scene.create("institute", sceneInstitute);
         WIZARD.scene.create("lake", sceneLake);
         WIZARD.scene.create("forest", sceneForest);
+        WIZARD.scene.create("puzzle2", scenePuzzle2);
 
         WIZARD.map.loadToScene("house", "house", mapLoader);
         WIZARD.map.loadToScene("town", "town", mapLoader);
@@ -194,6 +196,8 @@ wizard({
         WIZARD.map.loadToScene("institute", "institute", mapLoader);
         WIZARD.map.loadToScene("lake", "lake", mapLoader);
         WIZARD.map.loadToScene("forest", "forest", mapLoader);
+
+        WIZARD.progress._clear();
 
         var load = WIZARD.progress.load("limbo", progress);
 
@@ -213,6 +217,7 @@ wizard({
             WIZARD.scene.setCurrent("title", 0, this);
         }
 
+        WIZARD.scene.setCurrent("house", 0, this);
         WIZARD.time.createTimer("incrementMemory", 1000, incrementMemory,"infinite", false);
         WIZARD.time.createTimer("saveGame", 1000, saveGame, "infinite", false );
 
