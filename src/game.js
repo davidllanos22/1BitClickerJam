@@ -18,10 +18,34 @@ var ICON = {
 };
 
 var scrollingText = {
+    textArray: [""],
+    arrayIndex: 0,
     textToShow: "",
     count: 0,
     showingAllText: false,
     fullText: "",
+    showing: false,
+    blinkTime: 0,
+    showBlink: true,
+    update: function(){
+        this.blinkTime++;
+        if(this.blinkTime > 100){
+            this.showBlink = !this.showBlink;
+            this.blinkTime = 0;
+        }
+        if(this.showing && pressed){
+            if(this.showingAllText) {
+                if(this.arrayIndex < this.textArray.length - 1){
+                    this.arrayIndex++;
+                }else{
+                    this.showing = false;
+                }
+                this.reset();
+            }else{
+                this.showAllText();
+            }
+        }
+    },
     show: function(text, x, y, wiz){
         this.fullText = text;
         var speed = 50;
@@ -46,9 +70,23 @@ var scrollingText = {
     },
     showAllText: function(){
         this.showingAllText = true;
-        this.count = textToShow.length;
+        this.count = this.textToShow.length;
         this.textToShow = this.fullText;
+    },
+    render: function (wiz) {
+        var y =  WIZARD.camera.y + wiz.height - 24;
+
+        if(this.showing){
+            wiz.drawAABB({x:0, y:y, w: wiz.width, h: 24}, "#000", true);
+            this.show(this.textArray[this.arrayIndex], WIZARD.camera.x, y, wiz);
+        }
+
+        if(this.showingAllText && this.showBlink){
+            var x = WIZARD.camera.x + wiz.width - 8;
+            wiz.drawSprite("font", x, y + 14, 15, 2);
+        }
     }
+
 };
 
 var FADE_COLOR = {

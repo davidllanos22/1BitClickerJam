@@ -119,9 +119,7 @@ var generateColors = function(){
 var player;
 var pressed;
 var overIcon;
-var textToShow = [""];
-var indexText = 0;
-var showingText;
+
 var idEntityText;
 
 var overEntity = false;
@@ -222,15 +220,7 @@ wizard({
 
         WIZARD.scene.current.update(this);
 
-        if(showingText && pressed){
-            if(scrollingText.showingAllText) {
-                showingText = false;
-                scrollingText.reset();
-            }else{
-                scrollingText.showAllText();
-            }
-        }
-
+        scrollingText.update();
 
         if(WIZARD.input.keyJustPressed(WIZARD.keys.ESC)){
             generateColors();
@@ -240,11 +230,7 @@ wizard({
         this.clear("#000");
         WIZARD.scene.current.render(this);
         this.drawText("Mem:" + Math.floor(memory) + "%", WIZARD.camera.x, WIZARD.camera.y, "font");
-        if(showingText){
-            var y =  WIZARD.camera.y + this.height - 24;
-            this.drawAABB({x:0, y:y, w: this.width, h: 24}, "#000", true);
-            scrollingText.show(textToShow[indexText], WIZARD.camera.x, y, this);
-        }
+        scrollingText.render(this);
         this.drawSprite("mouse", bodyMouse.x, bodyMouse.y, overIcon, 0);
     }
 }).play();

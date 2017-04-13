@@ -210,63 +210,47 @@ var mapLoader = function(id, x, y, xx, yy, layer, sceneName){
     scene.collisions[y][x] = 0;
 
     if(id != -1){
-
+        scene.collisions[y][x] = 1;
         if(id == 1) { //Collision
             scene.collisions[y][x] = 1;
         }else if(id == 2) { //To Town
-            scene.collisions[y][x] = 1;
             WIZARD.entity.instantiateToScene("portal", {x: x * 16, y: y * 16, scene: "town", sceneX: 5, sceneY: 9, xx, yy}, sceneName);
         }else if(id == 3) { //To House
-            scene.collisions[y][x] = 1;
             WIZARD.entity.instantiateToScene("portal", {x: x * 16, y: y * 16, scene: "house", sceneX: 8, sceneY: 5, xx, yy}, sceneName);
         }else if(id == 4) { //Town to Road Ins
-            scene.collisions[y][x] = 1;
             WIZARD.entity.instantiateToScene("portal", {x: x * 16, y: y * 16, scene: "road_ins", sceneX: 4, sceneY: 1, xx, yy}, sceneName);
         }else if(id == 5) { //Town to Road Lake
-            scene.collisions[y][x] = 1;
             WIZARD.entity.instantiateToScene("portal", {x: x * 16, y: y * 16, scene: "road_lake", sceneX: 4, sceneY: 1, xx, yy}, sceneName);
         }else if(id == 6) { //Road Lake to Town
-            scene.collisions[y][x] = 1;
             WIZARD.entity.instantiateToScene("portal", {x: x * 16, y: y * 16, scene: "town", sceneX: 4, sceneY: 1, xx, yy}, sceneName);
         }else if(id == 7) { //Road Ins to Town
-            scene.collisions[y][x] = 1;
             WIZARD.entity.instantiateToScene("portal", {x: x * 16, y: y * 16, scene: "road_ins", sceneX: 4, sceneY: 1, xx, yy}, sceneName);
         }else if(id == 8) { //Ins to Road Lake
-            scene.collisions[y][x] = 1;
             WIZARD.entity.instantiateToScene("portal", {x: x * 16, y: y * 16, scene: "road_lake", sceneX: 4, sceneY: 1, xx, yy}, sceneName);
         }else if(id == 9) { //Lake to Ins
-            scene.collisions[y][x] = 1;
             WIZARD.entity.instantiateToScene("portal", {x: x * 16, y: y * 16, scene: "institute", sceneX: 4, sceneY: 1, xx, yy}, sceneName);
         }else if(id == 10) { //Road Ins to Ins
-            scene.collisions[y][x] = 1;
             WIZARD.entity.instantiateToScene("portal", {x: x * 16, y: y * 16, scene: "institute", sceneX: 4, sceneY: 1, xx, yy}, sceneName);
         }else if(id == 11) { //To lake
-            scene.collisions[y][x] = 1;
             WIZARD.entity.instantiateToScene("portal", {x: x * 16, y: y * 16, scene: "lake", sceneX: 4, sceneY: 1, xx, yy}, sceneName);
         }else if(id == 12) { //To forest
-            scene.collisions[y][x] = 1;
             WIZARD.entity.instantiateToScene("portal", {x: x * 16, y: y * 16, scene: "forest", sceneX: 4, sceneY: 1, xx, yy}, sceneName);
         }else if(id == 13) { //????
-            scene.collisions[y][x] = 1;
             WIZARD.entity.instantiateToScene("portal", {x: x * 16, y: y * 16, scene: "road_lake", sceneX: 4, sceneY: 1, xx, yy}, sceneName);
         }else if(id == 14) { //Lake to road
-            scene.collisions[y][x] = 1;
             WIZARD.entity.instantiateToScene("portal", {x: x * 16, y: y * 16, scene: "road_lake", sceneX: 4, sceneY: 1, xx, yy}, sceneName);
         }else if(id == 15) { //Forest to road
-            scene.collisions[y][x] = 1;
             WIZARD.entity.instantiateToScene("portal", {x: x * 16, y: y * 16, scene: "road_lake", sceneX: 4, sceneY: 1, xx, yy}, sceneName);
         }else if(id == 16) { //Player
             player = WIZARD.entity.instantiateToScene("player", {x: x * 16, y: y * 16}, sceneName);
         }else if(id == 17) { //Object
-            scene.collisions[y][x] = 1;
             WIZARD.entity.instantiateToScene("object", {x: x * 16, y: y * 16}, sceneName);
-        }else if(id == 18){//Object Talkable
-            scene.collisions[y][x] = 1;
-            WIZARD.entity.instantiateToScene("npc",{x: x * 16, y: y * 16}, sceneName);
+        }else if(id == 18){ // Niña
+            WIZARD.entity.instantiateToScene("npc", {x: x * 16, y: y * 16}, sceneName);
         }else if(id == 19){//Object Observable
-            scene.collisions[y][x] = 1;
-            WIZARD.entity.instantiateToScene("objectObservable",{x: x * 16, y: y * 16}, sceneName);
+            WIZARD.entity.instantiateToScene("objectObservable", {x: x * 16, y: y * 16}, sceneName);
         }else{
+            scene.collisions[y][x] = 0;
             if(!scene.tiles) scene.tiles = [];
             if(!scene.tiles["layer" + layer]) scene.tiles["layer" + layer] = [];
             var tiles = scene.tiles["layer" + layer];

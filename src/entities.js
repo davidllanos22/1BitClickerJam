@@ -71,7 +71,7 @@ var entityChris = function(params){
         this.currentTileX = Math.floor((this.body.x + 0.5) / 16);
         this.currentTileY = Math.floor((this.body.y + 0.5) / 16);
 
-        if(pressed && !overEntity && !showingText){
+        if(pressed && !overEntity && !scrollingText.showing){
             targetTileX = Math.floor((WIZARD.input.x / wiz.scale + WIZARD.camera.x) / 16);
             targetTileY = Math.floor((WIZARD.input.y / wiz.scale + WIZARD.camera.y) / 16);
 
@@ -109,12 +109,16 @@ var entityObject =  function(params){
     var estado = false;
 
     this.interact = function(){
-        estado = !estado;
+        if(estado) showTextEntity(this.id, ["Alguien se ha comido\nya esta manzana."]);
+        else {
+            showTextEntity(this.id, ["Mmm una manzana!"]);
+            estado = !estado;
+        }
     };
 
     this.render = function(wiz){
         if(estado){
-            wiz.drawSprite("tiles", this.body.x, this.body.y,1,0);
+            wiz.drawSprite("tiles", this.body.x, this.body.y,15,2);
         }else{
             wiz.drawSprite("tiles", this.body.x, this.body.y,1,1);
         }
@@ -133,7 +137,7 @@ var entityObjectObservable =  function(params){
     this.body = WIZARD.physics.createAABB(params.x, params.y, 16,16);
 
     this.interact = function(){
-        showTextEntity(this.id, "Un libro que habla!\nDeberia dejar de\ntomar drogas!");
+        showTextEntity(this.id, ["Un libro que habla!\nDeberia dejar de\ntomar drogas!"]);
     };
 
     this.render = function(wiz){
@@ -152,7 +156,7 @@ var entityNpc =  function(params){
     this.body = WIZARD.physics.createAABB(params.x, params.y, 16,16);
 
     this.interact = function(){
-        showTextEntity(this.id, "I miss my dog :(");
+        showTextEntity(this.id, ["I miss my dog.", "I wonder where it\nis :("]);
     };
 
     this.render = function(wiz){
@@ -218,7 +222,7 @@ var entityTile = function(params){
 
 
 var moveToEntityAndInteract = function(entity){
-    if(showingText) return;
+    if(scrollingText.showing) return;
     var x = Math.floor(entity.body.x / 16);
     var y = Math.floor(entity.body.y / 16);
     var tile = getSurroundingFreeTile(x, y);
@@ -254,11 +258,10 @@ var getSurroundingFreeTile = function(centerX, centerY){
     return tile;
 };
 
-var showTextEntity = function(id, string){
-    if(showingText)return;
+var showTextEntity = function(id, strings){
+    if(scrollingText.showing) return;
 
     idEntityText = id;
-    indexText++;
-    textToShow[indexText] = string;
-    showingText = true;
+    scrollingText.textArray = strings;
+    scrollingText.showing = true;
 };
