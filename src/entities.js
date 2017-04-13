@@ -109,9 +109,9 @@ var entityObject =  function(params){
     var estado = false;
 
     this.interact = function(){
-        if(estado) showTextEntity(this.id, ["Alguien se ha comido\nya esta manzana."]);
+        if(estado) showDialogue(["Alguien se ha comido\nya esta manzana."]);
         else {
-            showTextEntity(this.id, ["Mmm una manzana!"]);
+            showDialogue(["Mmm una manzana!"]);
             estado = !estado;
         }
     };
@@ -137,7 +137,7 @@ var entityObjectObservable =  function(params){
     this.body = WIZARD.physics.createAABB(params.x, params.y, 16,16);
 
     this.interact = function(){
-        showTextEntity(this.id, ["Un libro que habla?", "Deberia dejar de\ntomar drogas!"]);
+        showDialogue(["Un libro que habla?", "Deberia dejar de\ntomar drogas!"]);
     };
 
     this.render = function(wiz){
@@ -156,7 +156,7 @@ var entityNpc =  function(params){
     this.body = WIZARD.physics.createAABB(params.x, params.y, 16,16);
 
     this.interact = function(){
-        showTextEntity(this.id, ["I miss my dog.", "I wonder where it\nis :("]);
+        showDialogue(["I miss my dog.", "I wonder where it\nis :("]);
     };
 
     this.render = function(wiz){
@@ -220,7 +220,6 @@ var entityTile = function(params){
 };
 
 
-
 var moveToEntityAndInteract = function(entity){
     if(scrollingText.showing) return;
     var x = Math.floor(entity.body.x / 16);
@@ -258,10 +257,9 @@ var getSurroundingFreeTile = function(centerX, centerY){
     return tile;
 };
 
-var showTextEntity = function(id, strings){
+var showDialogue = function(strings){
     if(scrollingText.showing) return;
 
-    idEntityText = id;
     scrollingText.arrayIndex = 0;
     scrollingText.textArray = strings;
     scrollingText.showing = true;

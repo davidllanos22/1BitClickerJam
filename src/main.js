@@ -120,8 +120,6 @@ var player;
 var pressed;
 var overIcon;
 
-var idEntityText;
-
 var overEntity = false;
 var interacting = false;
 
@@ -180,6 +178,7 @@ wizard({
         WIZARD.map.create("lake", mapLake);
         WIZARD.map.create("forest", mapForest);
 
+        WIZARD.scene.create("title", sceneTitle);
         WIZARD.scene.create("town", sceneTown);
         WIZARD.scene.create("house", sceneHouse);
         WIZARD.scene.create("road_lake", sceneRoadLake);
@@ -196,7 +195,7 @@ wizard({
         WIZARD.map.loadToScene("lake", "lake", mapLoader);
         WIZARD.map.loadToScene("forest", "forest", mapLoader);
 
-        WIZARD.scene.setCurrent("house", 0, this);
+        WIZARD.scene.setCurrent("title", 0, this);
 
         WIZARD.time.createTimer("incrementMemory", 1000, incrementMemory,"infinite", false);
 
@@ -231,7 +230,7 @@ wizard({
     render: function(){
         this.clear("#000");
         WIZARD.scene.current.render(this);
-        this.drawText("Mem:" + Math.floor(memory) + "%", WIZARD.camera.x, WIZARD.camera.y, "font");
+
         scrollingText.render(this);
         this.drawSprite("mouse", bodyMouse.x, bodyMouse.y, overIcon, 0);
     }
