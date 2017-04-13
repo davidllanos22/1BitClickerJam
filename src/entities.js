@@ -137,7 +137,7 @@ var entityObjectObservable =  function(params){
     this.body = WIZARD.physics.createAABB(params.x, params.y, 16,16);
 
     this.interact = function(){
-        showTextEntity(this.id, ["Un libro que habla!\nDeberia dejar de\ntomar drogas!"]);
+        showTextEntity(this.id, ["Un libro que habla?", "Deberia dejar de\ntomar drogas!"]);
     };
 
     this.render = function(wiz){
@@ -262,6 +262,7 @@ var showTextEntity = function(id, strings){
     if(scrollingText.showing) return;
 
     idEntityText = id;
+    scrollingText.arrayIndex = 0;
     scrollingText.textArray = strings;
     scrollingText.showing = true;
 };
