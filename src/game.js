@@ -25,14 +25,7 @@ var scrollingText = {
     showingAllText: false,
     fullText: "",
     showing: false,
-    blinkTime: 0,
-    showBlink: true,
     update: function(){
-        this.blinkTime++;
-        if(this.blinkTime > 100){
-            this.showBlink = !this.showBlink;
-            this.blinkTime = 0;
-        }
         if(this.showing && pressed){
             if(this.showingAllText) {
                 if(this.arrayIndex < this.textArray.length - 1){
@@ -81,12 +74,11 @@ var scrollingText = {
             this.show(this.textArray[this.arrayIndex], WIZARD.camera.x, y, wiz);
         }
 
-        if(this.showingAllText && this.showBlink){
+        if(this.showingAllText){
             var x = WIZARD.camera.x + wiz.width - 8;
-            wiz.drawSprite("font", x, y + 14, 15, 2);
+            wiz.drawAnimation("font", "dialogue_blink", x, y + 14);
         }
     }
-
 };
 
 var FADE_COLOR = {

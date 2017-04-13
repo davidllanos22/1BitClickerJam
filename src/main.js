@@ -155,6 +155,8 @@ wizard({
         WIZARD.animation.createFrameAnimation("player_walk_down", [[0,3], [1,3],[0,3],[2,3]], 200);
         WIZARD.animation.createFrameAnimation("player_walk_up", [[0,4], [1,4],[0,4],[2,4]], 200);
 
+        WIZARD.animation.createFrameAnimation("dialogue_blink", [[15,2], [15,3]], 250);
+
         WIZARD.spritesheet.create("font", 8, 8);
         WIZARD.spritesheet.create("player", 16, 16);
         WIZARD.spritesheet.create("tiles", 16, 16);
