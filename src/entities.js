@@ -105,7 +105,7 @@ var entityChris = function(params){
 
 var entityObject =  function(params){
     this.body = WIZARD.physics.createAABB(params.x, params.y, 16,16);
-    this.strings = strings.getString("apple_1");
+    this.strings = strings.getString("apple");
 
     var estado = false;
 
@@ -113,7 +113,6 @@ var entityObject =  function(params){
         if(estado) showDialogue([this.strings[1]]);
         else {
             showDialogue([this.strings[0]]);
-            console.log(this.text1);
             estado = !estado;
         }
     };
@@ -137,7 +136,7 @@ var entityObject =  function(params){
 
 var entityObjectObservable =  function(params){
     this.body = WIZARD.physics.createAABB(params.x, params.y, 16,16);
-    this.strings = strings.getString("book_1");
+    this.strings = strings.getString("book");
 
     this.interact = function(){
         showDialogue([this.strings[0], this.strings[1]]);
@@ -202,7 +201,7 @@ var entityPortal = function(params){
     };
 
     this.render = function(wiz){
-        wiz.drawSprite("tiles", this.body.x, this.body.y, this.xx, this.yy);
+        //wiz.drawSprite("tiles", this.body.x, this.body.y, this.xx, this.yy);
     };
 
     this.update = function(wiz){

@@ -70,7 +70,7 @@ var scrollingText = {
         var y =  WIZARD.camera.y + wiz.height - 24;
 
         if(this.showing){
-            wiz.drawAABB({x:0, y:y, w: wiz.width, h: 24}, "#000", true);
+            wiz.fillRect(WIZARD.camera.x, y, wiz.width, 24, "#000");
             this.show(this.textArray[this.arrayIndex], WIZARD.camera.x, y, wiz);
         }
 
@@ -124,18 +124,19 @@ var strings = {
         "credits": "Credits: David Llanos, Martin Perez, Sara Pascual",
         "load": "cargar",
 
-        "book_1": ["¿Un libro que habla?", "¡Deberia dejar de  \ntomar drogas!"],
+        "book": ["¿Un libro que habla?", "¡Deberia dejar de  \ntomar drogas!"],
 
         "girl": ["He perdido a \nmi perro...", "Me encantaria \nencontrarlo :("],
 
-        "apple_1": ["Mmmh, ¡una manzana!", "Alguien se ha comido \nya esta manzana."],
+        "apple": ["Mmmh, ¡una manzana!", "Alguien se ha comido \nya esta manzana."],
     },
     "en":{
-        "start": "Do click\n for start",
+        "title" : "LIMBO",
+        "start": "  Do click\n for start",
         "credits": "Credits: David Llanos, Martin Perez, Sara Pascual",
         "load": "load game",
 
-        "book_1": ["A book that speaks?", "I should stop taking drugs!"],
+        "book": ["A book that speaks?", "I should stop taking drugs!"],
 
         "girl": ["I miss my dog.", "I wonder where it\nis :("],
 
