@@ -223,8 +223,12 @@ wizard({
         WIZARD.scene.current.update(this);
 
         if(showingText && pressed){
-            showingText = false;
-            scrollingText.reset();
+            if(scrollingText.showingAllText) {
+                showingText = false;
+                scrollingText.reset();
+            }else{
+                scrollingText.showAllText();
+            }
         }
 
 
@@ -237,7 +241,9 @@ wizard({
         WIZARD.scene.current.render(this);
         this.drawText("Mem:" + Math.floor(memory) + "%", WIZARD.camera.x, WIZARD.camera.y, "font");
         if(showingText){
-            scrollingText.show(textToShow[indexText], WIZARD.camera.x, WIZARD.camera.y + 90, this);
+            var y =  WIZARD.camera.y + this.height - 24;
+            this.drawAABB({x:0, y:y, w: this.width, h: 24}, "#000", true);
+            scrollingText.show(textToShow[indexText], WIZARD.camera.x, y, this);
         }
         this.drawSprite("mouse", bodyMouse.x, bodyMouse.y, overIcon, 0);
     }

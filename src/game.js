@@ -20,21 +20,34 @@ var ICON = {
 var scrollingText = {
     textToShow: "",
     count: 0,
+    showingAllText: false,
+    fullText: "",
     show: function(text, x, y, wiz){
+        this.fullText = text;
         var speed = 50;
         var instance = this;
         WIZARD.time.createTimer("scrollingText", speed, function(){
+            if(instance.showingAllText) return;
             //wiz.playSound("talk");
             instance.textToShow = text.substr(0, instance.count );
             instance.count++;
+            if(instance.count == text.length + 1){
+                instance.showingAllText = true;
+            }
         }, text.length + 1, false);
         wiz.drawText(instance.textToShow, x, y, "font");
-
     },
     reset: function(){
+        this.fullText = "";
+        this.showingAllText = false;
         this.textToShow = "";
         this.count = 0;
         if(WIZARD.timers["scrollingText"] != null) delete WIZARD.timers["scrollingText"];
+    },
+    showAllText: function(){
+        this.showingAllText = true;
+        this.count = textToShow.length;
+        this.textToShow = this.fullText;
     }
 };
 

@@ -64,7 +64,7 @@ var entityChris = function(params){
     };
 
     this.render = function(wiz){
-        wiz.drawAnimation("player", animation, this.body.x, this.body.y);
+        wiz.drawAnimation("player", animation, Math.floor(this.body.x), Math.floor(this.body.y));
     };
 
     this.update = function(wiz){
@@ -99,7 +99,7 @@ var entityChris = function(params){
         this.body.x = WIZARD.math.lerp(this.body.x, this.nextTileX * 16, 0.04);
         this.body.y = WIZARD.math.lerp(this.body.y, this.nextTileY * 16, 0.04);
 
-        WIZARD.camera.setPosition(this.body.x - wiz.width / 2, this.body.y - wiz.height / 2);
+        WIZARD.camera.setPosition(Math.floor(this.body.x - wiz.width / 2), Math.floor(this.body.y - wiz.height / 2));
     };
 };
 
@@ -133,7 +133,7 @@ var entityObjectObservable =  function(params){
     this.body = WIZARD.physics.createAABB(params.x, params.y, 16,16);
 
     this.interact = function(){
-        showTextEntity(this.id, "Un libro que habla!");
+        showTextEntity(this.id, "Un libro que habla!\nDeberia dejar de\ntomar drogas!");
     };
 
     this.render = function(wiz){
@@ -152,7 +152,7 @@ var entityNpc =  function(params){
     this.body = WIZARD.physics.createAABB(params.x, params.y, 16,16);
 
     this.interact = function(){
-        showTextEntity(this.id, "Hola, moriras.");
+        showTextEntity(this.id, "I miss my dog :(");
     };
 
     this.render = function(wiz){
@@ -261,5 +261,4 @@ var showTextEntity = function(id, string){
     indexText++;
     textToShow[indexText] = string;
     showingText = true;
-
 };
