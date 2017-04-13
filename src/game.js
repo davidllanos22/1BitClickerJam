@@ -114,8 +114,8 @@ var fadeScreen = function(from, to, time){
 var strings = {
     getString: function(name){
         var l = WIZARD.utils.getLanguage();
-        if(l == "ca") l = "es";
-        else if(l != "es") l = "en";
+        if(l == "ca" || l == "ca-ca" || l == "es-es" || l == "es") l = "es";
+        else l = "en";
         return this[l][name];
     },
     "es":{
@@ -136,7 +136,7 @@ var strings = {
         "credits": "Credits: David Llanos, Martin Perez, Sara Pascual",
         "load": "load game",
 
-        "book": ["A book that speaks?", "I should stop taking drugs!"],
+        "book": ["A book that speaks?", "I should stop \ntaking drugs!"],
 
         "girl": ["I miss my dog.", "I wonder where it\nis :("],
 
