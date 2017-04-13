@@ -21,7 +21,8 @@ var entityChris = function(params){
 
     this.moveTo = function(tileX, tileY, callback){
         var p = this;
-
+        progress.x = tileX;
+        progress.y = tileY;
         this.cancelPath();
         try {
             easystarPath = easystar.findPath(this.currentTileX, this.currentTileY, tileX, tileY, function (path) {
@@ -110,15 +111,15 @@ var entityObject =  function(params){
     var estado = false;
 
     this.interact = function(){
-        if(estado) showDialogue([this.strings[1]]);
+        if(progress.estadoManzana) showDialogue([this.strings[1]]);
         else {
             showDialogue([this.strings[0]]);
-            estado = !estado;
+            progress.estadoManzana = !progress.estadoManzana;
         }
     };
 
     this.render = function(wiz){
-        if(estado){
+        if(progress.estadoManzana){
             wiz.drawSprite("tiles", this.body.x, this.body.y,15,2);
         }else{
             wiz.drawSprite("tiles", this.body.x, this.body.y,1,1);

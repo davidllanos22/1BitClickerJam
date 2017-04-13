@@ -1,8 +1,13 @@
 var memory = 0;
 var speedMemory = 0.1;
+var saving = false;
 
 var incrementMemory = function(){
     memory += speedMemory;
+};
+
+var saveGame = function(){
+    saving = true;
 };
 
 var incrementSpeed = function () {
@@ -109,6 +114,29 @@ var fadeScreen = function(from, to, time){
         }
         fadeTime = inverted ? 1 - (count / times) : count / times;
     }, times, true);
+};
+
+var progress = {
+    memory: 0,
+    estadoManzana: false,
+    //scene
+    //x: 0,
+    //y: 0,
+};
+
+var state = {
+    load: function(){
+        var progress = JSON.parse(WIZARD.state.load("limbo"));
+        if(progress != null){
+            console.log("State loaded.");
+            this.progress = progress;
+        }
+    },
+
+    save: function(){
+        console.log("State saved.");
+        WIZARD.state.save("limbo", this.progress);
+    }
 };
 
 var strings = {

@@ -195,9 +195,26 @@ wizard({
         WIZARD.map.loadToScene("lake", "lake", mapLoader);
         WIZARD.map.loadToScene("forest", "forest", mapLoader);
 
-        WIZARD.scene.setCurrent("title", 0, this);
+        var load = WIZARD.progress.load("limbo", progress);
+
+        //progress = {};
+        if(load){
+            console.log("entro");
+            var index = WIZARD.scene.scenes["house"].entities.indexOf(player);
+            WIZARD.scene.scenes["house"].entities.splice(index, 1);
+            player.nextTileX = progress.x;
+            player.nextTileY = progress.y;
+            player.body.x = progress.x * 16;
+            player.body.y = progress.y * 16;
+            WIZARD.scene.scenes[progress.scene].entities.push(player);
+            WIZARD.scene.setCurrent("title", 0, this);
+
+        }else{
+            WIZARD.scene.setCurrent("title", 0, this);
+        }
 
         WIZARD.time.createTimer("incrementMemory", 1000, incrementMemory,"infinite", false);
+        WIZARD.time.createTimer("saveGame", 1000, saveGame, "infinite", false );
 
     },
 
@@ -225,6 +242,12 @@ wizard({
 
         if(WIZARD.input.keyJustPressed(WIZARD.keys.ESC)){
             generateColors();
+        }
+
+        if(saving){
+
+            WIZARD.progress.save("limbo", progress);
+            saving = !saving;
         }
     },
     render: function(){

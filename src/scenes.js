@@ -13,7 +13,7 @@ var sceneTitle = {
         if(this.creditsX < -len) this.creditsX = wiz.width;
         if(pressed) {
             fadeScreen(FADE_COLOR.NONE, FADE_COLOR.DARK, 600);
-            WIZARD.scene.setCurrent("house", 1000, wiz);
+            WIZARD.scene.setCurrent(progress.scene || "house", 1000, wiz);
         }
 
     },
@@ -33,6 +33,7 @@ var sceneHouse = {
     entities: [],
     tiles: [],
     onEnter: function(wiz){
+        progress.scene = WIZARD.scene.current.name;
         fadeScreen(FADE_COLOR.DARK, FADE_COLOR.NONE, 600);
         easystar.setGrid(this.collisions);
         console.log(this.name);
@@ -54,6 +55,7 @@ var sceneTown = {
     onEnter: function(wiz){
         fadeScreen(FADE_COLOR.DARK, FADE_COLOR.NONE, 600);
         easystar.setGrid(this.collisions);
+        progress.scene = WIZARD.scene.current.name;
         console.log(this.name);
     },
     update: function(wiz){
@@ -73,6 +75,7 @@ var sceneRoadLake = {
     onEnter: function(wiz){
         fadeScreen(FADE_COLOR.DARK, FADE_COLOR.NONE, 600);
         easystar.setGrid(this.collisions);
+        progress.scene = WIZARD.scene.current.name;
         console.log(this.name);
     },
     update: function(wiz){
@@ -92,6 +95,7 @@ var sceneInstitute = {
     onEnter: function(wiz){
         fadeScreen(FADE_COLOR.DARK, FADE_COLOR.NONE, 600);
         easystar.setGrid(this.collisions);
+        progress.scene = WIZARD.scene.current.name;
         console.log(this.name);
     },
     update: function(wiz){
@@ -111,6 +115,7 @@ var sceneRoadIns = {
     onEnter: function(wiz){
         fadeScreen(FADE_COLOR.DARK, FADE_COLOR.NONE, 600);
         easystar.setGrid(this.collisions);
+        progress.scene = WIZARD.scene.current.name;
         console.log(this.name);
     },
     update: function(wiz){
@@ -130,6 +135,7 @@ var sceneForest = {
     onEnter: function(wiz){
         fadeScreen(FADE_COLOR.DARK, FADE_COLOR.NONE, 600);
         easystar.setGrid(this.collisions);
+        progress.scene = WIZARD.scene.current.name;
         console.log(this.name);
     },
     update: function(wiz){
@@ -149,6 +155,7 @@ var sceneLake = {
     onEnter: function(wiz){
         fadeScreen(FADE_COLOR.DARK, FADE_COLOR.NONE, 600);
         easystar.setGrid(this.collisions);
+        progress.scene = WIZARD.scene.current.name;
         console.log(this.name);
     },
     update: function(wiz){
