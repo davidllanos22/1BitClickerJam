@@ -135,7 +135,7 @@ var mapInstitute = {
             spriteSheetWidth: 16
         },
         { // Entities instances
-            data:[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 9, 9, 9, 9, 9, 9, 0, 0, 0, 0, 0],
+            data:[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 9, 9, 9, 9, 9, 9, 0, 0, 0, 0, 0],
             mapHeight:20,
             mapWidth:17,
             spriteSheetWidth: 16
@@ -213,34 +213,34 @@ var mapLoader = function(id, x, y, xx, yy, layer, sceneName){
         scene.collisions[y][x] = 1;
         if(id == 1) { //Collision
             scene.collisions[y][x] = 1;
-        }else if(id == 2) { //To Town
+        }else if(id == 2) { //House To Town
             WIZARD.entity.instantiateToScene("portal", {x: x * 16, y: y * 16, scene: "town", sceneX: 5, sceneY: 9, xx, yy}, sceneName);
-        }else if(id == 3) { //To House
+        }else if(id == 3) { //Town To House
             WIZARD.entity.instantiateToScene("portal", {x: x * 16, y: y * 16, scene: "house", sceneX: 8, sceneY: 5, xx, yy}, sceneName);
         }else if(id == 4) { //Town to Road Ins
-            WIZARD.entity.instantiateToScene("portal", {x: x * 16, y: y * 16, scene: "road_ins", sceneX: 4, sceneY: 1, xx, yy}, sceneName);
+            WIZARD.entity.instantiateToScene("portal", {x: x * 16, y: y * 16, scene: "road_ins", sceneX: 1, sceneY: 3, xx, yy}, sceneName);
         }else if(id == 5) { //Town to Road Lake
             WIZARD.entity.instantiateToScene("portal", {x: x * 16, y: y * 16, scene: "road_lake", sceneX: 4, sceneY: 1, xx, yy}, sceneName);
         }else if(id == 6) { //Road Lake to Town
-            WIZARD.entity.instantiateToScene("portal", {x: x * 16, y: y * 16, scene: "town", sceneX: 4, sceneY: 1, xx, yy}, sceneName);
+            WIZARD.entity.instantiateToScene("portal", {x: x * 16, y: y * 16, scene: "town", sceneX: 8, sceneY: 18, xx, yy}, sceneName);
         }else if(id == 7) { //Road Ins to Town
-            WIZARD.entity.instantiateToScene("portal", {x: x * 16, y: y * 16, scene: "road_ins", sceneX: 4, sceneY: 1, xx, yy}, sceneName);
+            WIZARD.entity.instantiateToScene("portal", {x: x * 16, y: y * 16, scene: "town", sceneX: 15, sceneY: 3, xx, yy}, sceneName);
         }else if(id == 8) { //Ins to Road Lake
-            WIZARD.entity.instantiateToScene("portal", {x: x * 16, y: y * 16, scene: "road_lake", sceneX: 4, sceneY: 1, xx, yy}, sceneName);
-        }else if(id == 9) { //Lake to Ins
-            WIZARD.entity.instantiateToScene("portal", {x: x * 16, y: y * 16, scene: "institute", sceneX: 4, sceneY: 1, xx, yy}, sceneName);
+            WIZARD.entity.instantiateToScene("portal", {x: x * 16, y: y * 16, scene: "road_lake", sceneX: 35, sceneY: 1, xx, yy}, sceneName);
+        }else if(id == 9) { //Road Lake to Ins
+            WIZARD.entity.instantiateToScene("portal", {x: x * 16, y: y * 16, scene: "institute", sceneX: 8, sceneY: 18, xx, yy}, sceneName);
         }else if(id == 10) { //Road Ins to Ins
-            WIZARD.entity.instantiateToScene("portal", {x: x * 16, y: y * 16, scene: "institute", sceneX: 4, sceneY: 1, xx, yy}, sceneName);
-        }else if(id == 11) { //To lake
-            WIZARD.entity.instantiateToScene("portal", {x: x * 16, y: y * 16, scene: "lake", sceneX: 4, sceneY: 1, xx, yy}, sceneName);
-        }else if(id == 12) { //To forest
-            WIZARD.entity.instantiateToScene("portal", {x: x * 16, y: y * 16, scene: "forest", sceneX: 4, sceneY: 1, xx, yy}, sceneName);
-        }else if(id == 13) { //????
-            WIZARD.entity.instantiateToScene("portal", {x: x * 16, y: y * 16, scene: "road_lake", sceneX: 4, sceneY: 1, xx, yy}, sceneName);
-        }else if(id == 14) { //Lake to road
-            WIZARD.entity.instantiateToScene("portal", {x: x * 16, y: y * 16, scene: "road_lake", sceneX: 4, sceneY: 1, xx, yy}, sceneName);
-        }else if(id == 15) { //Forest to road
-            WIZARD.entity.instantiateToScene("portal", {x: x * 16, y: y * 16, scene: "road_lake", sceneX: 4, sceneY: 1, xx, yy}, sceneName);
+            WIZARD.entity.instantiateToScene("portal", {x: x * 16, y: y * 16, scene: "institute", sceneX: 1, sceneY: 3, xx, yy}, sceneName);
+        }else if(id == 11) { //Road Lake To lake
+            WIZARD.entity.instantiateToScene("portal", {x: x * 16, y: y * 16, scene: "lake", sceneX: 8, sceneY: 1, xx, yy}, sceneName);
+        }else if(id == 12) { //Road Lake To forest
+            WIZARD.entity.instantiateToScene("portal", {x: x * 16, y: y * 16, scene: "forest", sceneX: 9, sceneY: 18, xx, yy}, sceneName);
+        }else if(id == 13) { //Ins to Road Ins
+            WIZARD.entity.instantiateToScene("portal", {x: x * 16, y: y * 16, scene: "road_ins", sceneX: 15, sceneY: 3, xx, yy}, sceneName);
+        }else if(id == 14) { //Lake to road lake
+            WIZARD.entity.instantiateToScene("portal", {x: x * 16, y: y * 16, scene: "road_lake", sceneX: 20, sceneY: 27, xx, yy}, sceneName);
+        }else if(id == 15) { //Forest to road lake
+            WIZARD.entity.instantiateToScene("portal", {x: x * 16, y: y * 16, scene: "road_lake", sceneX: 20, sceneY: 21, xx, yy}, sceneName);
         }else if(id == 16) { //Player
             player = WIZARD.entity.instantiateToScene("player", {x: x * 16, y: y * 16}, sceneName);
         }else if(id == 17) { //Object
