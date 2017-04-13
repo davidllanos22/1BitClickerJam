@@ -105,13 +105,15 @@ var entityChris = function(params){
 
 var entityObject =  function(params){
     this.body = WIZARD.physics.createAABB(params.x, params.y, 16,16);
+    this.strings = strings.getString("apple_1");
 
     var estado = false;
 
     this.interact = function(){
-        if(estado) showDialogue(["Alguien se ha comido\nya esta manzana."]);
+        if(estado) showDialogue([this.strings[1]]);
         else {
-            showDialogue(["Mmm una manzana!"]);
+            showDialogue([this.strings[0]]);
+            console.log(this.text1);
             estado = !estado;
         }
     };
@@ -135,9 +137,10 @@ var entityObject =  function(params){
 
 var entityObjectObservable =  function(params){
     this.body = WIZARD.physics.createAABB(params.x, params.y, 16,16);
+    this.strings = strings.getString("book_1");
 
     this.interact = function(){
-        showDialogue(["Un libro que habla?", "Deberia dejar de\ntomar drogas!"]);
+        showDialogue([this.strings[0], this.strings[1]]);
     };
 
     this.render = function(wiz){
@@ -154,9 +157,10 @@ var entityObjectObservable =  function(params){
 
 var entityNpc =  function(params){
     this.body = WIZARD.physics.createAABB(params.x, params.y, 16,16);
+    this.strings = strings.getString("girl");
 
     this.interact = function(){
-        showDialogue(["I miss my dog.", "I wonder where it\nis :("]);
+        showDialogue([this.strings[0], this.strings[1]]);
     };
 
     this.render = function(wiz){

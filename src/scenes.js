@@ -2,6 +2,7 @@ var sceneTitle = {
     entities: [],
     tiles: [],
     creditsX: null,
+    strings: [strings.getString("title"), strings.getString("start"), strings.getString("credits")],
     onEnter: function(wiz){
         this.creditsX = wiz.width;
         fadeScreen(FADE_COLOR.DARK, FADE_COLOR.NONE, 600);
@@ -20,13 +21,9 @@ var sceneTitle = {
         var x = wiz.width / 2;
         var y = wiz.height / 2;
 
-        var title = "LIMBO";
-        var click = " Haz click \npara empezar";
-        var credits = "Credits: David Llanos, Martin Perez, Sara Pascual";
-
-        wiz.drawText(title, x - (title.length * 8) / 2, y - 16, "font");
-        wiz.drawText(" Haz click \npara empezar", x - (12 * 8) / 2 + 4, y + 8, "font");
-        wiz.drawText(credits, this.creditsX, wiz.height - 8, "font");
+        wiz.drawText(this.strings[0], x - (this.strings[0].length * 8) / 2, y - 16, "font");
+        wiz.drawText(this.strings[1], x - (12 * 8) / 2 + 4, y + 8, "font");
+        wiz.drawText(this.strings[2], this.creditsX, wiz.height - 8, "font");
     },
     onExit: function(wiz){
     }

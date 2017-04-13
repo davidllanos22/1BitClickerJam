@@ -111,5 +111,36 @@ var fadeScreen = function(from, to, time){
     }, times, true);
 };
 
+var strings = {
+    getString: function(name){
+        var l = WIZARD.utils.getLanguage();
+        if(l == "ca") l = "es";
+        else if(l != "es") l = "en";
+        return this[l][name];
+    },
+    "es":{
+        "title" : "LIMBO",
+        "start": " Haz click \npara empezar",
+        "credits": "Credits: David Llanos, Martin Perez, Sara Pascual",
+        "load": "cargar",
+
+        "book_1": ["¿Un libro que habla?", "¡Deberia dejar de  \ntomar drogas!"],
+
+        "girl": ["He perdido a \nmi perro...", "Me encantaria \nencontrarlo :("],
+
+        "apple_1": ["Mmmh, ¡una manzana!", "Alguien se ha comido \nya esta manzana."],
+    },
+    "en":{
+        "start": "Do click\n for start",
+        "credits": "Credits: David Llanos, Martin Perez, Sara Pascual",
+        "load": "load game",
+
+        "book_1": ["A book that speaks?", "I should stop taking drugs!"],
+
+        "girl": ["I miss my dog.", "I wonder where it\nis :("],
+
+        "apple": ["Mmmh, an apple!", "Someone eats \nthis apple."],
+    }
+};
 
 
