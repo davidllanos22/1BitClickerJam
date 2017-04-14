@@ -202,7 +202,7 @@ wizard({
         var index;
         var load;
         var useDemoProgress = false;
-        var clear = true;
+        var clear = false;
 
         if(clear){
             WIZARD.progress._clear();

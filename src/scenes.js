@@ -37,6 +37,8 @@ var sceneHouse = {
         fadeScreen(FADE_COLOR.DARK, FADE_COLOR.NONE, 600);
         easystar.setGrid(this.collisions);
         console.log(this.name);
+        progress.x = player.body.x/16;
+        progress.y = player.body.y/16;
     },
     update: function(wiz){
         WIZARD.scene.updateEntities(this, wiz);
@@ -53,9 +55,11 @@ var sceneTown = {
     entities: [],
     tiles: [],
     onEnter: function(wiz){
+        progress.scene = WIZARD.scene.current.name;
         fadeScreen(FADE_COLOR.DARK, FADE_COLOR.NONE, 600);
         easystar.setGrid(this.collisions);
-        progress.scene = WIZARD.scene.current.name;
+        progress.x = player.body.x/16;
+        progress.y = player.body.y/16;
     },
     update: function(wiz){
         WIZARD.scene.updateEntities(this, wiz);
@@ -72,10 +76,12 @@ var sceneRoadLake = {
     entities: [],
     tiles: [],
     onEnter: function(wiz){
+        progress.scene = WIZARD.scene.current.name;
         fadeScreen(FADE_COLOR.DARK, FADE_COLOR.NONE, 600);
         easystar.setGrid(this.collisions);
-        progress.scene = WIZARD.scene.current.name;
         console.log(this.name);
+        progress.x = player.body.x/16;
+        progress.y = player.body.y/16;
     },
     update: function(wiz){
         WIZARD.scene.updateEntities(this, wiz);
@@ -92,10 +98,12 @@ var sceneInstitute = {
     entities: [],
     tiles: [],
     onEnter: function(wiz){
+        progress.scene = WIZARD.scene.current.name;
         fadeScreen(FADE_COLOR.DARK, FADE_COLOR.NONE, 600);
         easystar.setGrid(this.collisions);
-        progress.scene = WIZARD.scene.current.name;
         console.log(this.name);
+        progress.x = player.body.x/16;
+        progress.y = player.body.y/16;
     },
     update: function(wiz){
         WIZARD.scene.updateEntities(this, wiz);
@@ -112,10 +120,12 @@ var sceneRoadIns = {
     entities: [],
     tiles: [],
     onEnter: function(wiz){
+        progress.scene = WIZARD.scene.current.name;
         fadeScreen(FADE_COLOR.DARK, FADE_COLOR.NONE, 600);
         easystar.setGrid(this.collisions);
-        progress.scene = WIZARD.scene.current.name;
         console.log(this.name);
+        progress.x = player.body.x/16;
+        progress.y = player.body.y/16;
     },
     update: function(wiz){
         WIZARD.scene.updateEntities(this, wiz);
@@ -132,10 +142,12 @@ var sceneForest = {
     entities: [],
     tiles: [],
     onEnter: function(wiz){
+        progress.scene = WIZARD.scene.current.name;
         fadeScreen(FADE_COLOR.DARK, FADE_COLOR.NONE, 600);
         easystar.setGrid(this.collisions);
-        progress.scene = WIZARD.scene.current.name;
         console.log(this.name);
+        progress.x = player.body.x/16;
+        progress.y = player.body.y/16;
     },
     update: function(wiz){
         WIZARD.scene.updateEntities(this, wiz);
@@ -152,9 +164,9 @@ var sceneLake = {
     entities: [],
     tiles: [],
     onEnter: function(wiz){
+        progress.scene = WIZARD.scene.current.name;
         fadeScreen(FADE_COLOR.DARK, FADE_COLOR.NONE, 600);
         easystar.setGrid(this.collisions);
-        progress.scene = WIZARD.scene.current.name;
         console.log(this.name);
     },
     update: function(wiz){
