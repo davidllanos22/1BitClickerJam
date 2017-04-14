@@ -202,7 +202,7 @@ wizard({
         var index;
         var load;
         var useDemoProgress = false;
-        var clear = false;
+        var clear = true;
 
         if(clear){
             WIZARD.progress._clear();
@@ -265,9 +265,3 @@ wizard({
         this.drawSprite("mouse", bodyMouse.x, bodyMouse.y, overIcon, 0);
     }
 }).play();
-
-
-
-
-
-

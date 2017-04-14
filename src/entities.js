@@ -22,8 +22,10 @@ var entityChris = function(params){
         var p = this;
         progress.x = tileX;
         progress.y = tileY;
+
         this.cancelPath();
         try {
+            console.log("current : " + this.currentTileX + " " + this.currentTileY);
             easystarPath = easystar.findPath(this.currentTileX, this.currentTileY, tileX, tileY, function (path) {
                 targetTileX = tileX;
                 targetTileY = tileY;
@@ -262,6 +264,8 @@ var getSurroundingFreeTile = function(centerX, centerY){
     else if(isFreeTile(centerX - 1, centerY)) tile.x -= 1;
     else if(isFreeTile(centerX, centerY - 1)) tile.y -= 1;
     else if(isFreeTile(centerX, centerY + 1)) tile.y += 1;
+
+    console.log(tile);
 
     return tile;
 };
