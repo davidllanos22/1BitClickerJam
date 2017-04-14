@@ -1,13 +1,12 @@
 var memory = 0;
 var speedMemory = 0.1;
-var saving = false;
 
 var incrementMemory = function(){
     memory += speedMemory;
 };
 
 var saveGame = function(){
-    saving = true;
+    WIZARD.progress.save("limbo", progress);
 };
 
 var incrementSpeed = function () {

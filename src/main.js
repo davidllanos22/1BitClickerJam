@@ -105,6 +105,9 @@ var bB = 1;
 var generateColors = function(){
     //Color A:{r: 0.2921388904396145, g: 0.38771675703581976, b: 0.7190860643404482}
     //Color B:{r: 0.528005024206649, g: 0.9435701220295565, b: 0.18140640640489059}
+
+    //Color A:{r: 0.33114151315458806, g: 0.17013094998067957, b: 0.37657495709533384}
+    //Color B:{r: 0.7767240650026537, g: 0.5285715047338326, b: 0.501880082849868}
     rA = WIZARD.math.randomBetween(0,1);
     gA = WIZARD.math.randomBetween(0,1);
     bA = WIZARD.math.randomBetween(0,1);
@@ -125,9 +128,8 @@ var interacting = false;
 
 var easystar = new EasyStar.js();
 var easystarPath;
+
 easystar.setAcceptableTiles([0]);
-//easystar.enableDiagonals();
-//easystar.enableCornerCutting();
 easystar.setIterationsPerCalculation(100);
 
 var bodyMouse = WIZARD.physics.createAABB(WIZARD.input.x, WIZARD.input.y, 1,1);
@@ -203,7 +205,6 @@ wizard({
 
         //progress = {};
         if(load){
-            console.log("entro");
             var index = WIZARD.scene.scenes["house"].entities.indexOf(player);
             WIZARD.scene.scenes["house"].entities.splice(index, 1);
             player.nextTileX = progress.x;
@@ -218,7 +219,7 @@ wizard({
         }
 
         WIZARD.scene.setCurrent("house", 0, this);
-        WIZARD.time.createTimer("incrementMemory", 1000, incrementMemory,"infinite", false);
+        WIZARD.time.createTimer("incrementMemory", 1000, incrementMemory, "infinite", false);
         WIZARD.time.createTimer("saveGame", 1000, saveGame, "infinite", false );
 
     },
@@ -247,12 +248,6 @@ wizard({
 
         if(WIZARD.input.keyJustPressed(WIZARD.keys.ESC)){
             generateColors();
-        }
-
-        if(saving){
-
-            WIZARD.progress.save("limbo", progress);
-            saving = !saving;
         }
     },
     render: function(){
