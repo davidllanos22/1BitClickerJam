@@ -240,7 +240,6 @@ wizard({
             }
         }
 
-
         //WIZARD.scene.setCurrent("house", 0, this);
         WIZARD.time.createTimer("incrementMemory", 1000, incrementMemory, "infinite", false);
         WIZARD.time.createTimer("saveGame", 1000, saveGame, "infinite", false );

@@ -97,23 +97,23 @@ var fadeColor = FADE_COLOR.NONE;
 var fadeTime = 0;
 
 var fadeScreen = function(from, to, time){
-    if(fading) return;
-    var times = (time / 10);
-    var count = 0;
-    var inverted = true;
-    fading = true;
-    fadeColor = to;
-    if(to == FADE_COLOR.NONE) fadeColor = from;
-    if(from == FADE_COLOR.NONE) inverted = false;
-    fadeTime = inverted ? 1 - (count / times) : count / times;
-
-    WIZARD.time.createTimer("fade", 10, function () {
-        count++;
-        if(count == times){
-            fading = false;
-        }
-        fadeTime = inverted ? 1 - (count / times) : count / times;
-    }, times, true);
+    // if(fading) return;
+    // var times = (time / 10);
+    // var count = 0;
+    // var inverted = true;
+    // fading = true;
+    // fadeColor = to;
+    // if(to == FADE_COLOR.NONE) fadeColor = from;
+    // if(from == FADE_COLOR.NONE) inverted = false;
+    // fadeTime = inverted ? 1 - (count / times) : count / times;
+    //
+    // WIZARD.time.createTimer("fade", 10, function () {
+    //     count++;
+    //     if(count == times){
+    //         fading = false;
+    //     }
+    //     fadeTime = inverted ? 1 - (count / times) : count / times;
+    // }, times, true);
 };
 
 var progress = {
@@ -122,21 +122,6 @@ var progress = {
     scene: "town",
     x: 8,
     y: 10,
-};
-
-var state = {
-    load: function(){
-        var progress = JSON.parse(WIZARD.state.load("limbo"));
-        if(progress != null){
-            console.log("State loaded.");
-            this.progress = progress;
-        }
-    },
-
-    save: function(){
-        console.log("State saved.");
-        WIZARD.state.save("limbo", this.progress);
-    }
 };
 
 var strings = {
