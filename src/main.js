@@ -201,44 +201,29 @@ wizard({
 
         var index;
         var load;
-        var demoProgress = false;
-        var empezarDeNuevo = false;
+        var useDemoProgress = false;
+        var clear = false;
 
-        if(empezarDeNuevo){
+        if(clear){
             WIZARD.progress._clear();
-
-            progress.estadoManzana = false;
-            progress.memory = 0;
-            progress.x = player.nextTileX;
-            progress.y = player.nextTileY;
-            progress.scene = "house";
-            WIZARD.scene.setCurrent("title", 0, this);
+            progress = {};
         }else{
-            if(demoProgress){ //Modo demo
-                index = WIZARD.scene.scenes["house"].entities.indexOf(player);
-                WIZARD.scene.scenes["house"].entities.splice(index, 1);
-                player.nextTileX = progress.x;
-                player.nextTileY = progress.y;
-                player.body.x = progress.x * 16;
-                player.body.y = progress.y * 16;
-                WIZARD.scene.scenes[progress.scene].entities.push(player);
-                memory = progress.memory;
-                WIZARD.scene.setCurrent("title", 0, this);
-            }else{ //Cargar partida
-                load = WIZARD.progress.load("limbo", progress);
-                if(load){ //Cargar partida
-                    index = WIZARD.scene.scenes["house"].entities.indexOf(player);
-                    WIZARD.scene.scenes["house"].entities.splice(index, 1);
-                    player.nextTileX = progress.x;
-                    player.nextTileY = progress.y;
-                    player.body.x = progress.x * 16;
-                    player.body.y = progress.y * 16;
-                    WIZARD.scene.scenes[progress.scene].entities.push(player);
-                    memory = progress.memory;
-                    WIZARD.scene.setCurrent("title", 0, this);
-                }
+            if(!useDemoProgress){
+                WIZARD.progress.load("limbo", progress);
             }
+
+            index = WIZARD.scene.scenes["house"].entities.indexOf(player);
+            WIZARD.scene.scenes["house"].entities.splice(index, 1);
+            player.nextTileX = progress.x;
+            player.nextTileY = progress.y;
+            player.body.x = progress.x * 16;
+            player.body.y = progress.y * 16;
+            WIZARD.scene.scenes[progress.scene].entities.push(player);
+            memory = progress.memory;
         }
+
+        WIZARD.scene.setCurrent("title", 0, this);
+
 
         //WIZARD.scene.setCurrent("house", 0, this);
         WIZARD.time.createTimer("incrementMemory", 1000, incrementMemory, "infinite", false);
