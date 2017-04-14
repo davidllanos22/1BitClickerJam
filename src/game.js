@@ -3,6 +3,7 @@ var speedMemory = 0.1;
 
 var incrementMemory = function(){
     memory += speedMemory;
+    progress.memory = memory;
 };
 
 var saveGame = function(){
@@ -116,11 +117,11 @@ var fadeScreen = function(from, to, time){
 };
 
 var progress = {
-    memory: 0,
-    estadoManzana: false,
-    //scene
-    //x: 0,
-    //y: 0,
+    memory: 25,
+    estadoManzana: true,
+    scene: "town",
+    x: 8,
+    y: 10,
 };
 
 var state = {
