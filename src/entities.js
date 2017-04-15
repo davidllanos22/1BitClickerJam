@@ -69,15 +69,14 @@ var entityChris = function(params){
         wiz.drawAnimation("player", animation, Math.floor(this.body.x), Math.floor(this.body.y));
     };
 
-    this.update = function(wiz){
+    this.update = function(wiz) {
         this.currentTileX = Math.floor((this.body.x + 0.5) / 16);
         this.currentTileY = Math.floor((this.body.y + 0.5) / 16);
-
-        if(pressed && !overEntity && !scrollingText.showing){
+        if (pressed && !overEntity && !scrollingText.showing) {
             targetTileX = Math.floor((WIZARD.input.x / wiz.scale + WIZARD.camera.x) / 16);
             targetTileY = Math.floor((WIZARD.input.y / wiz.scale + WIZARD.camera.y) / 16);
 
-            if( targetTileX >= WIZARD.scene.current.collisions[0].length ||
+            if (targetTileX >= WIZARD.scene.current.collisions[0].length ||
                 targetTileY >= WIZARD.scene.current.collisions.length ||
                 targetTileX < 0 ||
                 targetTileY < 0) return;
@@ -86,22 +85,133 @@ var entityChris = function(params){
         }
 
 
-        if(this.nextTileX < this.currentTileX && this.nextTileY == this.currentTileY){ // Camino a la izquierda
+        if (this.nextTileX < this.currentTileX && this.nextTileY == this.currentTileY) { // Camino a la izquierda
             animation = "player_walk_left";
-        }else if(this.nextTileX > this.currentTileX && this.nextTileY == this.currentTileY){ // Camino a la derecha
+        } else if (this.nextTileX > this.currentTileX && this.nextTileY == this.currentTileY) { // Camino a la derecha
             animation = "player_walk_right";
-        }else if(this.nextTileY > this.currentTileY && this.nextTileX == this.currentTileX){ // Camino abajo
+        } else if (this.nextTileY > this.currentTileY && this.nextTileX == this.currentTileX) { // Camino abajo
             animation = "player_walk_down";
-        }else if(this.nextTileY < this.currentTileY && this.nextTileX == this.currentTileX){ // Camino arriba
+        } else if (this.nextTileY < this.currentTileY && this.nextTileX == this.currentTileX) { // Camino arriba
             animation = "player_walk_up";
-        }else if(targetTileX == this.currentTileX && targetTileY == this.currentTileY){ // Reset
+        } else if (targetTileX == this.currentTileX && targetTileY == this.currentTileY) { // Reset
             animation = "player_idle_down";
         }
 
         this.body.x = WIZARD.math.lerp(this.body.x, this.nextTileX * 16, 0.04);
         this.body.y = WIZARD.math.lerp(this.body.y, this.nextTileY * 16, 0.04);
 
-        WIZARD.camera.setPosition(Math.floor(this.body.x - wiz.width / 2), Math.floor(this.body.y - wiz.height / 2));
+        // Control de la Camara
+
+        //Cogemos ancho y largo segun el mapa donde nos encontremos.
+        if (progress.scene == "house") {
+            maxMapX = mapHouse.layers[0].mapWidth;
+            maxMapY = mapHouse.layers[0].mapHeight;
+        } else if (progress.scene == "town") {
+            maxMapX = mapTown.layers[0].mapWidth;
+            maxMapY = mapTown.layers[0].mapHeight;
+        } else if (progress.scene == "lake") {
+            maxMapX = mapLake.layers[0].mapWidth;
+            maxMapY = mapLake.layers[0].mapHeight;
+        } else if (progress.scene == "forest") {
+            maxMapX = mapForest.layers[0].mapWidth;
+            maxMapY = mapForest.layers[0].mapHeight;
+        } else if (progress.scene == "institute") {
+            maxMapX = mapInstitute.layers[0].mapWidth;
+            maxMapY = mapInstitute.layers[0].mapHeight;
+        } else if (progress.scene == "road_lake"){
+            maxMapX = mapRoadLake.layers[0].mapWidth;
+            maxMapY = mapRoadLake.layers[0].mapHeight;
+        }else if (progress.scene == "road_ins"){
+            maxMapX = mapRoadIns.layers[0].mapWidth;
+            maxMapY = mapRoadIns.layers[0].mapHeight;
+        }
+
+        //Seguimiento de la camara:
+        //Soy consciente de que es MUY mejorable, pero así funciona. Ya pensaré una manera mas eficiente.
+        var extremoIzquierdo = this.body.x/16 < 5;
+        var extremoArriba = this.body.y/16 < 4;
+        var extremoDerecho = ( maxMapX - (this.body.x/16) ) < 5;
+        var extremoAbajo = ( maxMapY - (this.body.y/16) ) < 4;
+
+        if( !extremoIzquierdo && !extremoArriba && !extremoDerecho && !extremoAbajo){ //0000
+            console.log("Caso Default"+ " Estoy en X: " + Math.floor(this.body.x/16) + " Y: "+Math.floor(this.body.y/16));
+            WIZARD.camera.setPosition(Math.floor(this.body.x - wiz.width / 2), Math.floor(this.body.y - wiz.height / 2));
+        }else if(!extremoIzquierdo && !extremoArriba && !extremoDerecho && extremoAbajo) { //0001
+
+            console.log("Caso 1" + " Estoy en X: " + Math.floor(this.body.x/16) + " Y: "+Math.floor(this.body.y/16));
+            WIZARD.camera.setPosition(Math.floor(this.body.x - wiz.width / 2), Math.floor(((maxMapY-4)*16) - wiz.height / 2));
+
+        }else if(!extremoIzquierdo && !extremoArriba && extremoDerecho && !extremoAbajo){ //0010
+
+            console.log("Caso 2"+ " Estoy en X: " + Math.floor(this.body.x/16) + " Y: "+Math.floor(this.body.y/16));
+            WIZARD.camera.setPosition(Math.floor(((maxMapX-5)*16) - wiz.width / 2), Math.floor(this.body.y - wiz.height / 2));
+
+        }else if(!extremoIzquierdo && !extremoArriba && extremoDerecho && extremoAbajo) { //0011
+
+            console.log("Caso 3"+ " Estoy en X: " + Math.floor(this.body.x/16) + " Y: "+Math.floor(this.body.y/16));
+            WIZARD.camera.setPosition(Math.floor(((maxMapX-5)*16) - wiz.width / 2), Math.floor(((maxMapY-4)*16) - wiz.height / 2));
+
+        }else if(!extremoIzquierdo && extremoArriba && !extremoDerecho && !extremoAbajo) { //0100
+
+            console.log("Caso 4"+ " Estoy en X: " + Math.floor(this.body.x/16) + " Y: "+Math.floor(this.body.y/16));
+            WIZARD.camera.setPosition(Math.floor(this.body.x - wiz.width / 2), Math.floor((4*16) - wiz.height / 2));
+
+        }else if(!extremoIzquierdo && extremoArriba && !extremoDerecho && extremoAbajo) { // 0101
+
+            console.log("Caso 4"+ " Estoy en X: " + Math.floor(this.body.x/16) + " Y: "+Math.floor(this.body.y/16));
+            WIZARD.camera.setPosition(Math.floor(this.body.x - wiz.width / 2), Math.floor((4*16) - wiz.height / 2));
+
+        }else if(!extremoIzquierdo && extremoArriba && extremoDerecho && !extremoAbajo) { //0110
+
+            console.log("Caso 5"+ " Estoy en X: " + Math.floor(this.body.x/16) + " Y: "+Math.floor(this.body.y/16));
+            WIZARD.camera.setPosition(Math.floor(((maxMapX-5)*16) - wiz.width / 2), Math.floor((4*16) - wiz.height / 2));
+
+        }else if(!extremoIzquierdo && extremoArriba && extremoDerecho && extremoAbajo){ //0111
+
+            console.log("Caso 6"+ " Estoy en X: " + Math.floor(this.body.x/16) + " Y: "+Math.floor(this.body.y/16));
+            WIZARD.camera.setPosition(Math.floor(((maxMapX-5)*16) - wiz.width / 2), Math.floor((4*16) - wiz.height / 2));
+
+        }else if(extremoIzquierdo && !extremoArriba && !extremoDerecho && !extremoAbajo){ //1000
+
+            console.log("Caso 7"+ " Estoy en X: " + Math.floor(this.body.x/16) + " Y: "+Math.floor(this.body.y/16));
+            WIZARD.camera.setPosition(Math.floor(5 * 16 - wiz.width / 2), Math.floor(this.body.y - wiz.height / 2));
+
+        }else if(extremoIzquierdo && !extremoArriba && !extremoDerecho && extremoAbajo){ //1001
+
+            console.log("Caso 8"+ " Estoy en X: " + Math.floor(this.body.x/16) + " Y: "+Math.floor(this.body.y/16));
+            WIZARD.camera.setPosition(Math.floor(5 * 16 - wiz.width / 2), Math.floor(((maxMapY-4)*16) - wiz.height / 2));
+
+        }else if(extremoIzquierdo && !extremoArriba && extremoDerecho && !extremoAbajo){ //1010
+
+            console.log("Caso 9"+ " Estoy en X: " + Math.floor(this.body.x/16) + " Y: "+Math.floor(this.body.y/16));
+            WIZARD.camera.setPosition(Math.floor(5 * 16 - wiz.width / 2), Math.floor(this.body.y - wiz.height / 2));
+
+        }else if(extremoIzquierdo && !extremoArriba && extremoDerecho && extremoAbajo){ //1011
+
+            console.log("Caso 10"+ " Estoy en X: " + Math.floor(this.body.x/16) + " Y: "+Math.floor(this.body.y/16));
+            WIZARD.camera.setPosition(Math.floor(5 * 16 - wiz.width / 2), Math.floor(((maxMapY-4)*16) - wiz.height / 2));
+
+        }else if(extremoIzquierdo && extremoArriba && !extremoDerecho && !extremoAbajo){ //1100
+
+            console.log("Caso 11"+ " Estoy en X: " + Math.floor(this.body.x/16) + " Y: "+Math.floor(this.body.y/16));
+            WIZARD.camera.setPosition(Math.floor(5 * 16 - wiz.width / 2), Math.floor((4*16) - wiz.height / 2));
+
+        }else if(extremoIzquierdo && extremoArriba && !extremoDerecho && extremoAbajo){ //1101
+
+            console.log("Caso 12"+ " Estoy en X: " + Math.floor(this.body.x/16) + " Y: "+Math.floor(this.body.y/16));
+            WIZARD.camera.setPosition(Math.floor(5 * 16 - wiz.width / 2), Math.floor((4*16) - wiz.height / 2));
+
+        }else if(extremoIzquierdo && extremoArriba && extremoDerecho && !extremoAbajo){ //1110
+
+            console.log("Caso 6"+ " Estoy en X: " + Math.floor(this.body.x/16) + " Y: "+Math.floor(this.body.y/16));
+            WIZARD.camera.setPosition(Math.floor(5 * 16 - wiz.width / 2), Math.floor((4*16) - wiz.height / 2));
+
+        }else if(extremoIzquierdo && extremoArriba && extremoDerecho && extremoAbajo){ //1111
+
+            console.log("Caso 6"+ " Estoy en X: " + Math.floor(this.body.x/16) + " Y: "+Math.floor(this.body.y/16));
+            WIZARD.camera.setPosition(Math.floor(5 * 16 - wiz.width / 2), Math.floor((4*16) - wiz.height / 2));
+        }
+
     };
 };
 
@@ -236,6 +346,7 @@ var moveToEntityAndInteract = function(entity){
     var x = Math.floor(entity.body.x / 16);
     var y = Math.floor(entity.body.y / 16);
     var tile = getSurroundingFreeTile(x, y);
+    console.log("X DEL OBJECT: " + tile.x + "| Y DEL OBJECT: " + tile.y);
     player.moveTo(tile.x, tile.y, function(){
         entity.interact();
     });

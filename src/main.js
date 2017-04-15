@@ -200,9 +200,8 @@ wizard({
         WIZARD.map.loadToScene("forest", "forest", mapLoader);
 
         var index;
-        var load;
-        var useDemoProgress = false;
-        var clear = true;
+        var useDemoProgress = true;
+        var clear = false;
 
         if(clear){
             WIZARD.progress._clear();
