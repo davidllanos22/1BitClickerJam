@@ -95,6 +95,13 @@ var FADE_COLOR = {
     DARK: -1,
 };
 
+var ENTITY_TYPE = {
+    TEST_APPLE: 0,
+    TEST_BOOK: 1,
+    TEST_SIGNBOARD: 2,
+    GIRL: 3,
+};
+
 var fading = false;
 var fadeColor = FADE_COLOR.NONE;
 var fadeTime = 0;

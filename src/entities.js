@@ -120,34 +120,45 @@ var entityChris = function(params){
 };
 
 var entityObject =  function(params){
-    this.body = WIZARD.physics.createAABB(params.x, params.y, 16,16);
-    this.strings = strings.getString("apple");
+    this.body = WIZARD.physics.createAABB(params.x, params.y, 16, 16);
     this.xx = params.xx;
     this.yy = params.yy;
-
-    var estado = false;
-    var instance = this;
+    this.type = params.type;
 
     this.interact = function(){
-        if(params.interact) params.interact({scene: WIZARD.scene.current.name});
-        else {
-            if (progress.estadoManzana) showDialogue([instance.strings[1]]);
-            else {
-                showDialogue([instance.strings[0]], function(){
-                    progress.estadoManzana = !progress.estadoManzana;
+        switch(this.type){
+            case ENTITY_TYPE.TEST_SIGNBOARD:
+                showDialogue(["Oh, un puzzle!"], function(){
+                    fadeScreen(FADE_COLOR.NONE, FADE_COLOR.DARK, 600);
+                    WIZARD.scene.setCurrent("puzzle2", 1000, null, null, {lastScene: WIZARD.scene.current.name});
                     interacting = false;
                 });
-            }
+                break;
+            case ENTITY_TYPE.TEST_APPLE:
+                if (progress.estadoManzana) showDialogue([strings.getString("apple")[1]]);
+                else {
+                    showDialogue([strings.getString("apple")[0]], function(){
+                        progress.estadoManzana = !progress.estadoManzana;
+                        interacting = false;
+                    });
+                }
+                break;
         }
     };
 
     this.render = function(wiz){
-        if(progress.estadoManzana){
-            wiz.drawSprite("tiles", this.body.x, this.body.y,15,2);
-        }else{
-            wiz.drawSprite("tiles", this.body.x, this.body.y, this.xx, this.yy);
+        switch(this.type) {
+            case ENTITY_TYPE.TEST_SIGNBOARD:
+                wiz.drawSprite("tiles", this.body.x, this.body.y, this.xx, this.yy);
+                break;
+            case ENTITY_TYPE.TEST_APPLE:
+                if(progress.estadoManzana){
+                    wiz.drawSprite("tiles", this.body.x, this.body.y,15,2);
+                }else{
+                    wiz.drawSprite("tiles", this.body.x, this.body.y, this.xx, this.yy);
+                }
+                break;
         }
-
     };
 
     this.update = function(wiz){
@@ -160,14 +171,22 @@ var entityObject =  function(params){
 
 var entityObjectObservable =  function(params){
     this.body = WIZARD.physics.createAABB(params.x, params.y, 16,16);
-    this.strings = strings.getString("book");
+    this.type = params.type;
 
     this.interact = function(){
-        showDialogue([this.strings[0], this.strings[1]]);
+        switch(this.type) {
+            case ENTITY_TYPE.TEST_BOOK:
+                showDialogue(strings.getString("book"));
+                break;
+        }
     };
 
     this.render = function(wiz){
-        wiz.drawSprite("tiles", this.body.x, this.body.y,3,1);
+        switch(this.type) {
+            case ENTITY_TYPE.TEST_BOOK:
+                wiz.drawSprite("tiles", this.body.x, this.body.y,3,1);
+                break;
+        }
     };
 
     this.update = function(wiz){
@@ -180,15 +199,23 @@ var entityObjectObservable =  function(params){
 
 var entityNpc =  function(params){
     this.body = WIZARD.physics.createAABB(params.x, params.y, 16,16);
-    this.strings = strings.getString("girl");
+    this.type = params.type;
 
     this.interact = function(){
-
-        showDialogue([this.strings[0], this.strings[1]]);
+        switch(this.type) {
+            case ENTITY_TYPE.GIRL:
+                showDialogue(strings.getString("girl"));
+                break;
+        }
     };
 
     this.render = function(wiz){
-        wiz.drawSprite("npc", this.body.x, this.body.y,0,0);
+        switch(this.type) {
+            case ENTITY_TYPE.GIRL:
+                //TODO: animation?
+                wiz.drawSprite("npc", this.body.x, this.body.y, 0, 0);
+                break;
+        }
     };
 
     this.update = function(wiz){
@@ -206,7 +233,7 @@ var entityPortal = function(params){
     this.sceneY = params.sceneY;
     this.xx = params.xx;
     this.yy = params.yy;
-
+    this.type = params.type;
 
     this.interact = function(){
         if(interacting) return;
@@ -286,8 +313,6 @@ var getSurroundingFreeTile = function(centerX, centerY){
     else if(isFreeTile(centerX - 1, centerY)) tile.x -= 1;
     else if(isFreeTile(centerX, centerY - 1)) tile.y -= 1;
     else if(isFreeTile(centerX, centerY + 1)) tile.y += 1;
-
-    console.log(tile);
 
     return tile;
 };

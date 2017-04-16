@@ -259,16 +259,13 @@ var mapLoader = function(id, x, y, xx, yy, layer, sceneName){
                 scene.collisions[y][x] = 0;
                 player = WIZARD.entity.instantiateToScene("player", {x: x * 16, y: y * 16}, sceneName);
         }else if(id == 17) { //Object
-            WIZARD.entity.instantiateToScene("object", {x: x * 16, y: y * 16, xx: xx, yy: yy}, sceneName);
+            WIZARD.entity.instantiateToScene("object", {x: x * 16, y: y * 16, xx: xx, yy: yy, type: ENTITY_TYPE.TEST_APPLE}, sceneName);
         }else if(id == 18){ // Niña
-            WIZARD.entity.instantiateToScene("npc", {x: x * 16, y: y * 16}, sceneName);
-        }else if(id == 19){//Object Observable
-            WIZARD.entity.instantiateToScene("objectObservable", {x: x * 16, y: y * 16}, sceneName);
+            WIZARD.entity.instantiateToScene("npc", {x: x * 16, y: y * 16, type: ENTITY_TYPE.GIRL}, sceneName);
+        }else if(id == 19){//Object Libro
+            WIZARD.entity.instantiateToScene("objectObservable", {x: x * 16, y: y * 16, type: ENTITY_TYPE.TEST_BOOK}, sceneName);
         }else if(id == 89){// Entidad puzzle2
-            WIZARD.entity.instantiateToScene("object", {x: x * 16, y: y * 16, xx: xx, yy: yy, interact: function(params){
-                fadeScreen(FADE_COLOR.NONE, FADE_COLOR.DARK, 600);
-                WIZARD.scene.setCurrent("puzzle2", 1000, null, null, {lastScene:params.scene});
-            }}, sceneName);
+            WIZARD.entity.instantiateToScene("object", {x: x * 16, y: y * 16, xx: xx, yy: yy, type: ENTITY_TYPE.TEST_SIGNBOARD}, sceneName);
         }else{
             scene.collisions[y][x] = 0;
             if(!scene.tiles) scene.tiles = [];
