@@ -27,7 +27,7 @@ var entityChris = function(params){
 
         this.cancelPath();
         try {
-            console.log("current : " + this.currentTileX + " " + this.currentTileY);
+            //console.log("current : " + this.currentTileX + " " + this.currentTileY);
             easystarPath = easystar.findPath(this.currentTileX, this.currentTileY, tileX, tileY, function (path) {
                 targetTileX = tileX;
                 targetTileY = tileY;
@@ -102,26 +102,20 @@ var entityChris = function(params){
         this.body.x = WIZARD.math.lerp(this.body.x, this.nextTileX * 16, 0.04);
         this.body.y = WIZARD.math.lerp(this.body.y, this.nextTileY * 16, 0.04);
 
-
         //Cogemos ancho y largo segun el mapa.
         var maxMapX = WIZARD.scene.current.collisions[0].length * 16;
         var maxMapY = WIZARD.scene.current.collisions.length * 16;
 
         // Control de la Camara
-        var camX = this.body.x;
-        var camY = this.body.y;
+        var camX = Math.max(0, Math.min(Math.floor(this.body.x - wiz.width / 2), maxMapX - wiz.width));
+        var camY = Math.max(0, Math.min(Math.floor(this.body.y - wiz.height / 2), maxMapY - wiz.height));
 
         if(progress.scene == "house"){
-            camX = Math.floor(camX - wiz.width / 2);
-            camY = Math.floor(camY - wiz.height/2);
-        }else{
-            camX = Math.max(0, Math.min(Math.floor(camX - wiz.width / 2), Math.floor(maxMapX - wiz.width)));
-            camY = Math.max(0, Math.min(Math.floor(camY - wiz.height / 2), Math.floor(maxMapY - wiz.height)));
+            camX = Math.floor(this.body.x - wiz.width / 2);
+            camY = Math.floor(this.body.y - wiz.height/ 2);
         }
 
         WIZARD.camera.setPosition(camX, camY);
-
-
     };
 };
 

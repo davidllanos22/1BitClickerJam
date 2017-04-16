@@ -100,23 +100,24 @@ var fadeColor = FADE_COLOR.NONE;
 var fadeTime = 0;
 
 var fadeScreen = function(from, to, time){
-    // if(fading) return;
-    // var times = (time / 10);
-    // var count = 0;
-    // var inverted = true;
-    // fading = true;
-    // fadeColor = to;
-    // if(to == FADE_COLOR.NONE) fadeColor = from;
-    // if(from == FADE_COLOR.NONE) inverted = false;
-    // fadeTime = inverted ? 1 - (count / times) : count / times;
-    //
-    // WIZARD.time.createTimer("fade", 10, function () {
-    //     count++;
-    //     if(count == times){
-    //         fading = false;
-    //     }
-    //     fadeTime = inverted ? 1 - (count / times) : count / times;
-    // }, times, true);
+    if(navigator.userAgent.indexOf("Firefox") != -1) return;
+    if(fading) return;
+    var times = (time / 10);
+    var count = 0;
+    var inverted = true;
+    fading = true;
+    fadeColor = to;
+    if(to == FADE_COLOR.NONE) fadeColor = from;
+    if(from == FADE_COLOR.NONE) inverted = false;
+    fadeTime = inverted ? 1 - (count / times) : count / times;
+
+    WIZARD.time.createTimer("fade", 10, function () {
+        count++;
+        if(count == times){
+            fading = false;
+        }
+        fadeTime = inverted ? 1 - (count / times) : count / times;
+    }, times, true);
 };
 
 var progress = {
