@@ -14,6 +14,7 @@ var entityChris = function(params){
         this.nextTileY = this.currentTileY;
         targetTileX = this.currentTileX;
         targetTileY = this.currentTileY;
+        easystar.cancelPath(easystarPath);
         easystarPath = null;
         WIZARD.time.removeTimer("easystar");
     };
@@ -85,7 +86,6 @@ var entityChris = function(params){
 
             this.moveTo(targetTileX, targetTileY);
         }
-
 
         if (this.nextTileX < this.currentTileX && this.nextTileY == this.currentTileY) { // Camino a la izquierda
             animation = "player_walk_left";
