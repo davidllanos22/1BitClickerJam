@@ -102,123 +102,18 @@ var entityChris = function(params){
         this.body.x = WIZARD.math.lerp(this.body.x, this.nextTileX * 16, 0.04);
         this.body.y = WIZARD.math.lerp(this.body.y, this.nextTileY * 16, 0.04);
 
-        // Control de la Camara
-
-
-        /*
-        if (progress.scene == "house") {
-            maxMapX = mapHouse.layers[0].mapWidth;
-            maxMapY = mapHouse.layers[0].mapHeight;
-        } else if (progress.scene == "town") {
-            maxMapX = mapTown.layers[0].mapWidth;
-            maxMapY = mapTown.layers[0].mapHeight;
-        } else if (progress.scene == "lake") {
-            maxMapX = mapLake.layers[0].mapWidth;
-            maxMapY = mapLake.layers[0].mapHeight;
-        } else if (progress.scene == "forest") {
-            maxMapX = mapForest.layers[0].mapWidth;
-            maxMapY = mapForest.layers[0].mapHeight;
-        } else if (progress.scene == "institute") {
-            maxMapX = mapInstitute.layers[0].mapWidth;
-            maxMapY = mapInstitute.layers[0].mapHeight;
-        } else if (progress.scene == "road_lake"){
-            maxMapX = mapRoadLake.layers[0].mapWidth;
-            maxMapY = mapRoadLake.layers[0].mapHeight;
-        }else if (progress.scene == "road_ins"){
-            maxMapX = mapRoadIns.layers[0].mapWidth;
-            maxMapY = mapRoadIns.layers[0].mapHeight;
-        }
-    */
 
         //Cogemos ancho y largo segun el mapa.
-        maxMapX = WIZARD.scene.current.collisions[0].length * 16;
-        maxMapY = WIZARD.scene.current.collisions.length * 16;
+        var maxMapX = WIZARD.scene.current.collisions[0].length * 16;
+        var maxMapY = WIZARD.scene.current.collisions.length * 16;
+        // Control de la Camara
+        var camX = this.body.x;
+        var camY = this.body.y;
+        camX = Math.max(0, Math.min(Math.floor(camX - wiz.width / 2), maxMapX));
+        camY = Math.max(0, Math.min(Math.floor(camY- wiz.height / 2), maxMapY));
 
-        //Seguimiento de la camara:
-        //Soy consciente de que es MUY mejorable, pero así funciona. Ya pensaré una manera mas eficiente.
-        var extremoIzquierdo = Math.floor(this.body.x/16) < 5;
-        var extremoArriba = Math.floor(this.body.y/16) < 4;
-        var extremoDerecho = ( Math.floor(maxMapX/16) - Math.floor(this.body.x/16) ) < 5;
-        var extremoAbajo = ( Math.floor(maxMapY/16) - Math.floor(this.body.y/16) ) < 4;
+        WIZARD.camera.setPosition(camX, camY);
 
-        if( !extremoIzquierdo && !extremoArriba && !extremoDerecho && !extremoAbajo){ //0000
-            //console.log("Caso Default"+ " Estoy en X: " + Math.floor(this.body.x/16) + " Y: "+Math.floor(this.body.y/16));
-            WIZARD.camera.setPosition(Math.floor(this.body.x - wiz.width / 2), Math.floor(this.body.y - wiz.height / 2));
-        }else if(!extremoIzquierdo && !extremoArriba && !extremoDerecho && extremoAbajo) { //0001
-
-            //console.log("Caso 1" + " Estoy en X: " + Math.floor(this.body.x/16) + " Y: "+Math.floor(this.body.y/16));
-            WIZARD.camera.setPosition(Math.floor(this.body.x - wiz.width / 2), Math.floor(((maxMapY-4*16)) - wiz.height / 2));
-
-        }else if(!extremoIzquierdo && !extremoArriba && extremoDerecho && !extremoAbajo){ //0010
-
-            //console.log("Caso 2"+ " Estoy en X: " + Math.floor(this.body.x/16) + " Y: "+Math.floor(this.body.y/16));
-            WIZARD.camera.setPosition(Math.floor(((maxMapX-5*16)) - wiz.width / 2), Math.floor(this.body.y - wiz.height / 2));
-
-        }else if(!extremoIzquierdo && !extremoArriba && extremoDerecho && extremoAbajo) { //0011
-
-            //console.log("Caso 3"+ " Estoy en X: " + Math.floor(this.body.x/16) + " Y: "+Math.floor(this.body.y/16));
-            WIZARD.camera.setPosition(Math.floor(((maxMapX-5*16)) - wiz.width / 2), Math.floor(((maxMapY-4*16)) - wiz.height / 2));
-
-        }else if(!extremoIzquierdo && extremoArriba && !extremoDerecho && !extremoAbajo) { //0100
-
-            //console.log("Caso 4"+ " Estoy en X: " + Math.floor(this.body.x/16) + " Y: "+Math.floor(this.body.y/16));
-            WIZARD.camera.setPosition(Math.floor(this.body.x - wiz.width / 2), Math.floor( 4*16 - wiz.height / 2));
-
-        }else if(!extremoIzquierdo && extremoArriba && !extremoDerecho && extremoAbajo) { // 0101
-
-            //console.log("Caso 4"+ " Estoy en X: " + Math.floor(this.body.x/16) + " Y: "+Math.floor(this.body.y/16));
-            WIZARD.camera.setPosition(Math.floor(this.body.x - wiz.width / 2), Math.floor((4*16) - wiz.height / 2));
-
-        }else if(!extremoIzquierdo && extremoArriba && extremoDerecho && !extremoAbajo) { //0110
-
-            //console.log("Caso 5"+ " Estoy en X: " + Math.floor(this.body.x/16) + " Y: "+Math.floor(this.body.y/16));
-            WIZARD.camera.setPosition(Math.floor(((maxMapX-6*16)) - wiz.width / 2), Math.floor((4*16) - wiz.height / 2));
-
-        }else if(!extremoIzquierdo && extremoArriba && extremoDerecho && extremoAbajo){ //0111
-
-            //console.log("Caso 6"+ " Estoy en X: " + Math.floor(this.body.x/16) + " Y: "+Math.floor(this.body.y/16));
-            WIZARD.camera.setPosition(Math.floor(((maxMapX-6*16)) - wiz.width / 2), Math.floor((4*16) - wiz.height / 2));
-
-        }else if(extremoIzquierdo && !extremoArriba && !extremoDerecho && !extremoAbajo){ //1000
-
-            //console.log("Caso 7"+ " Estoy en X: " + Math.floor(this.body.x/16) + " Y: "+Math.floor(this.body.y/16));
-            WIZARD.camera.setPosition(Math.floor(5 * 16 - wiz.width / 2), Math.floor(this.body.y - wiz.height / 2));
-
-        }else if(extremoIzquierdo && !extremoArriba && !extremoDerecho && extremoAbajo){ //1001
-
-            //console.log("Caso 8"+ " Estoy en X: " + Math.floor(this.body.x/16) + " Y: "+Math.floor(this.body.y/16));
-            WIZARD.camera.setPosition(Math.floor(5 * 16 - wiz.width / 2), Math.floor((maxMapY-(4*16)) - wiz.height / 2));
-
-        }else if(extremoIzquierdo && !extremoArriba && extremoDerecho && !extremoAbajo){ //1010
-
-            //console.log("Caso 9"+ " Estoy en X: " + Math.floor(this.body.x/16) + " Y: "+Math.floor(this.body.y/16));
-            WIZARD.camera.setPosition(Math.floor(5 * 16 - wiz.width / 2), Math.floor(this.body.y - wiz.height / 2));
-
-        }else if(extremoIzquierdo && !extremoArriba && extremoDerecho && extremoAbajo){ //1011
-
-            //console.log("Caso 10"+ " Estoy en X: " + Math.floor(this.body.x/16) + " Y: "+Math.floor(this.body.y/16));
-            WIZARD.camera.setPosition(Math.floor(5 * 16 - wiz.width / 2), Math.floor(((maxMapY-4*16)) - wiz.height / 2));
-
-        }else if(extremoIzquierdo && extremoArriba && !extremoDerecho && !extremoAbajo){ //1100
-
-            //console.log("Caso 11"+ " Estoy en X: " + Math.floor(this.body.x/16) + " Y: "+Math.floor(this.body.y/16));
-            WIZARD.camera.setPosition(Math.floor(5 * 16 - wiz.width / 2), Math.floor((4*16) - wiz.height / 2));
-
-        }else if(extremoIzquierdo && extremoArriba && !extremoDerecho && extremoAbajo){ //1101
-
-            //console.log("Caso 12"+ " Estoy en X: " + Math.floor(this.body.x/16) + " Y: "+Math.floor(this.body.y/16));
-            WIZARD.camera.setPosition(Math.floor(5 * 16 - wiz.width / 2), Math.floor((4*16) - wiz.height / 2));
-
-        }else if(extremoIzquierdo && extremoArriba && extremoDerecho && !extremoAbajo){ //1110
-
-            //console.log("Caso 13"+ " Estoy en X: " + Math.floor(this.body.x/16) + " Y: "+Math.floor(this.body.y/16));
-            WIZARD.camera.setPosition(Math.floor(5 * 16 - wiz.width / 2), Math.floor((4*16) - wiz.height / 2));
-
-        }else if(extremoIzquierdo && extremoArriba && extremoDerecho && extremoAbajo){ //1111
-
-            //console.log("Caso 14"+ " Estoy en X: " + Math.floor(this.body.x/16) + " Y: "+Math.floor(this.body.y/16));
-            WIZARD.camera.setPosition(Math.floor(5 * 16 - wiz.width / 2), Math.floor((4*16) - wiz.height / 2));
-        }
 
     };
 };
