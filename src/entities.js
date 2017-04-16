@@ -110,9 +110,15 @@ var entityChris = function(params){
         // Control de la Camara
         var camX = this.body.x;
         var camY = this.body.y;
-        camX = Math.max(0, Math.min(Math.floor(camX - wiz.width / 2), Math.floor(maxMapX - wiz.width)));
-        camY = Math.max(0, Math.min(Math.floor(camY - wiz.height / 2), Math.floor(maxMapY - wiz.height)));
-        
+
+        if(progress.scene == "house"){
+            camX = Math.floor(camX - wiz.width / 2);
+            camY = Math.floor(camY - wiz.height/2);
+        }else{
+            camX = Math.max(0, Math.min(Math.floor(camX - wiz.width / 2), Math.floor(maxMapX - wiz.width)));
+            camY = Math.max(0, Math.min(Math.floor(camY - wiz.height / 2), Math.floor(maxMapY - wiz.height)));
+        }
+
         WIZARD.camera.setPosition(camX, camY);
 
 
