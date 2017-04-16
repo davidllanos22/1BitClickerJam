@@ -1,3 +1,12 @@
+var ENTITY_TYPE = {
+    TEST_APPLE: 0,
+    TEST_BOOK: 1,
+    TEST_SIGNBOARD: 2,
+    GIRL: 3,
+    DOG_LAKE: 4,
+    FOOTSTEPS: 5,
+};
+
 var entityChris = function(params){
     this.body = WIZARD.physics.createAABB(params.x, params.y, 16, 16);
     var animation = "player_idle_down";
@@ -21,6 +30,7 @@ var entityChris = function(params){
 
     this.moveTo = function(tileX, tileY, callback){
         if(interacting) return;
+
         var p = this;
         progress.x = tileX;
         progress.y = tileY;
@@ -29,11 +39,13 @@ var entityChris = function(params){
         try {
             //console.log("current : " + this.currentTileX + " " + this.currentTileY);
             easystarPath = easystar.findPath(this.currentTileX, this.currentTileY, tileX, tileY, function (path) {
+
                 targetTileX = tileX;
                 targetTileY = tileY;
                 if (path === null) {
                     console.log("Path was not found. From: " + p.currentTileX + "," + p.currentTileY + " to " + tileX + "," + tileY);
                 } else {
+
                     var count = 0;
                     if(path.length == 0 && callback){
                         // Pequeño delay, para que de tiempo a llegar bien al tile
@@ -158,6 +170,8 @@ var entityObject =  function(params){
                     wiz.drawSprite("tiles", this.body.x, this.body.y, this.xx, this.yy);
                 }
                 break;
+            default:
+                wiz.drawSprite("tiles", this.body.x, this.body.y, this.xx, this.yy);
         }
     };
 
@@ -172,11 +186,19 @@ var entityObject =  function(params){
 var entityObjectObservable =  function(params){
     this.body = WIZARD.physics.createAABB(params.x, params.y, 16,16);
     this.type = params.type;
+    this.xx = params.xx;
+    this.yy = params.yy;
 
     this.interact = function(){
         switch(this.type) {
             case ENTITY_TYPE.TEST_BOOK:
                 showDialogue(strings.getString("book"));
+                break;
+            case ENTITY_TYPE.FOOTSTEPS:
+                if(!progress.footsteps_inspected)
+                    showDialogue(strings.getString("footsteps"));
+                else showDialogue(strings.getString("footsteps_inspected"));
+                progress.footsteps_inspected = true;
                 break;
         }
     };
@@ -186,6 +208,8 @@ var entityObjectObservable =  function(params){
             case ENTITY_TYPE.TEST_BOOK:
                 wiz.drawSprite("tiles", this.body.x, this.body.y,3,1);
                 break;
+            default:
+                wiz.drawSprite("tiles", this.body.x, this.body.y, this.xx, this.yy);
         }
     };
 
@@ -206,6 +230,9 @@ var entityNpc =  function(params){
             case ENTITY_TYPE.GIRL:
                 showDialogue(strings.getString("girl"));
                 break;
+            case ENTITY_TYPE.DOG_LAKE:
+                showDialogue(strings.getString("dog_lake"));
+                break;
         }
     };
 
@@ -214,6 +241,10 @@ var entityNpc =  function(params){
             case ENTITY_TYPE.GIRL:
                 //TODO: animation?
                 wiz.drawSprite("npc", this.body.x, this.body.y, 0, 0);
+                break;
+            case ENTITY_TYPE.DOG_LAKE:
+                //TODO: animation?
+                wiz.drawSprite("npc", this.body.x, this.body.y, 0, 1);
                 break;
         }
     };
@@ -291,28 +322,69 @@ var moveToEntityAndInteract = function(entity){
 };
 
 var getSurroundingFreeTile = function(centerX, centerY){
-    //TODO: Tener en cuenta la posición del player respecto al tile. Para no hacer que se coloque arriba si viene de abajo, por ejemplo.
     var pX = player.currentTileX;
     var pY = player.currentTileY;
 
-    var tile = {x:centerX, y:centerY};
-    //
-    // if(pX > centerX){ // Viene de la derecha
-    //     if(isFreeTile(centerX + 1, centerY)) tile.x += 1;
-    // }else if(pX < centerX){ // Viene de la izquierda
-    //     if(isFreeTile(centerX - 1, centerY)) tile.x -= 1;
-    // }
-    //
-    // if(pY > centerY){ // Viene de arriba
-    //     if(isFreeTile(centerX, centerY - 1)) tile.y -= 1;
-    // }else if(pY < centerY){ // Viene de abajo
-    //     if(isFreeTile(centerX, centerY + 1)) tile.y += 1;
-    // }
+    var DIRECTION = {
+        CENTER: -1,
+        UP: 0,
+        DOWN: 1,
+        LEFT: 2,
+        RIGHT: 3
+    };
 
-    if(isFreeTile(centerX + 1, centerY)) tile.x += 1;
-    else if(isFreeTile(centerX - 1, centerY)) tile.x -= 1;
-    else if(isFreeTile(centerX, centerY - 1)) tile.y -= 1;
-    else if(isFreeTile(centerX, centerY + 1)) tile.y += 1;
+    var bestDistance = 100;
+    var bestDirection = DIRECTION.CENTER;
+
+    var tile = {x: centerX, y: centerY};
+
+    var dX, dY;
+
+    // up
+    if(isFreeTile(centerX, centerY - 1)) {
+        dX = Math.abs(centerX - pX);
+        dY = Math.abs(centerY - 1 - pY);
+
+        bestDistance = Math.sqrt(Math.pow((dX), 2) + Math.pow((dY), 2));
+        bestDirection = DIRECTION.UP;
+    }
+    // down
+    if(isFreeTile(centerX, centerY + 1)) {
+        dX = Math.abs(centerX - pX);
+        dY = Math.abs(centerY + 1 - pY);
+
+        var tempDistance = Math.sqrt(Math.pow((dX), 2) + Math.pow((dY), 2));
+        if(tempDistance < bestDistance){
+            bestDistance = tempDistance;
+            bestDirection = DIRECTION.DOWN;
+        }
+    }
+    // left
+    if(isFreeTile(centerX - 1, centerY)) {
+        dX = Math.abs(centerX - 1 - pX);
+        dY = Math.abs(centerY - pY);
+
+        var tempDistance = Math.sqrt(Math.pow((dX), 2) + Math.pow((dY), 2));
+        if(tempDistance < bestDistance){
+            bestDistance = tempDistance;
+            bestDirection = DIRECTION.LEFT;
+        }
+    }
+    // right
+    if(isFreeTile(centerX + 1, centerY)) {
+        dX = Math.abs(centerX + 1 - pX);
+        dY = Math.abs(centerY - pY);
+
+        var tempDistance = Math.sqrt(Math.pow((dX), 2) + Math.pow((dY), 2));
+        if(tempDistance < bestDistance){
+            bestDirection = DIRECTION.RIGHT;
+        }
+    }
+
+    if(bestDirection == DIRECTION.RIGHT) tile.x += 1;
+    else if(bestDirection == DIRECTION.LEFT) tile.x -= 1;
+    else if(bestDirection == DIRECTION.UP) tile.y -= 1;
+    else if(bestDirection == DIRECTION.DOWN) tile.y += 1;
 
     return tile;
 };

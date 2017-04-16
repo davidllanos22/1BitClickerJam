@@ -95,12 +95,7 @@ var FADE_COLOR = {
     DARK: -1,
 };
 
-var ENTITY_TYPE = {
-    TEST_APPLE: 0,
-    TEST_BOOK: 1,
-    TEST_SIGNBOARD: 2,
-    GIRL: 3,
-};
+
 
 var fading = false;
 var fadeColor = FADE_COLOR.NONE;
@@ -129,10 +124,12 @@ var fadeScreen = function(from, to, time){
 
 var progress = {
     memory: 25,
-    estadoManzana: true,
     scene: "house",
     x: 4,
     y: 8,
+
+    estadoManzana: true,
+    footsteps_inspected: false,
 };
 
 var strings = {
@@ -144,27 +141,27 @@ var strings = {
     },
     "es":{
         "title" : "LIMBO",
-        "start": " Haz click \npara empezar",
+        "start": " Haz click\npara empezar",
         "credits": "Credits: David Llanos, Martin Perez, Sara Pascual",
         "load": "cargar",
-
         "book": ["¿Un libro que habla?", "¡Deberia dejar de  \ntomar drogas!"],
-
         "girl": ["He perdido a \nmi perro...", "Me encantaria \nencontrarlo :("],
-
+        "dog_lake": ["¡Guau guau!", "(Un perro bloquea el\ncamino)"],
+        "footsteps": ["MMmm parecen\nhuellas.", "¿Deberia seguirlas?"],
+        "footsteps_inspected": ["Aqui hay mas\nhuellas."],
         "apple": ["Mmmh, ¡una manzana!", "Alguien se ha comido \nya esta manzana."],
     },
     "en":{
         "title" : "LIMBO",
-        "start": "  Do click\n for start",
+        "start": "  Click\n to start",
         "credits": "Credits: David Llanos, Martin Perez, Sara Pascual",
         "load": "load game",
-
         "book": ["A book that speaks?", "I should stop \ntaking drugs!"],
-
         "girl": ["I miss my dog.", "I wonder where it\nis :("],
-
-        "apple": ["Mmmh, an apple!", "Someone eats \nthis apple."],
+        "dog_lake": ["¡Guau guau!", "(Un perro bloquea el\ncamino)"],
+        "footsteps": ["MMmm parecen\nhuellas.", "¿Deberia seguirlas?"],
+        "footsteps_inspected": ["Aqui hay mas\nhuellas."],
+        "apple": ["Mmmh, an apple!", "Someone ate \nthis apple."],
     }
 };
 

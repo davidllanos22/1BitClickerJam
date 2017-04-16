@@ -3,6 +3,7 @@ var sceneTitle = {
     tiles: [],
     creditsX: null,
     strings: [strings.getString("title"), strings.getString("start"), strings.getString("credits")],
+    started: false,
     onEnter: function(wiz){
         this.creditsX = wiz.width;
         fadeScreen(FADE_COLOR.DARK, FADE_COLOR.NONE, 600);
@@ -11,9 +12,10 @@ var sceneTitle = {
         this.creditsX -= 0.2;
         var len = "Credits: David Llanos, Martin Perez, Sara Pascual".length * 8;
         if(this.creditsX < -len) this.creditsX = wiz.width;
-        if(pressed) {
+        if(pressed && !this.started) {
+            this.started = true;
             fadeScreen(FADE_COLOR.NONE, FADE_COLOR.DARK, 600);
-            WIZARD.scene.setCurrent(progress.scene || "house", 1000, wiz);
+            WIZARD.scene.setCurrent(progress.scene || "lake", 1000, wiz);
         }
 
     },
@@ -36,7 +38,6 @@ var sceneHouse = {
         progress.scene = WIZARD.scene.current.name;
         fadeScreen(FADE_COLOR.DARK, FADE_COLOR.NONE, 600);
         easystar.setGrid(this.collisions);
-        console.log(this.name);
         progress.x = player.body.x/16;
         progress.y = player.body.y/16;
     },
@@ -79,7 +80,6 @@ var sceneRoadLake = {
         progress.scene = WIZARD.scene.current.name;
         fadeScreen(FADE_COLOR.DARK, FADE_COLOR.NONE, 600);
         easystar.setGrid(this.collisions);
-        console.log(this.name);
         progress.x = player.body.x/16;
         progress.y = player.body.y/16;
     },
@@ -101,7 +101,6 @@ var sceneInstitute = {
         progress.scene = WIZARD.scene.current.name;
         fadeScreen(FADE_COLOR.DARK, FADE_COLOR.NONE, 600);
         easystar.setGrid(this.collisions);
-        console.log(this.name);
         progress.x = player.body.x/16;
         progress.y = player.body.y/16;
     },
@@ -123,7 +122,6 @@ var sceneRoadIns = {
         progress.scene = WIZARD.scene.current.name;
         fadeScreen(FADE_COLOR.DARK, FADE_COLOR.NONE, 600);
         easystar.setGrid(this.collisions);
-        console.log(this.name);
         progress.x = player.body.x/16;
         progress.y = player.body.y/16;
     },
@@ -145,7 +143,6 @@ var sceneForest = {
         progress.scene = WIZARD.scene.current.name;
         fadeScreen(FADE_COLOR.DARK, FADE_COLOR.NONE, 600);
         easystar.setGrid(this.collisions);
-        console.log(this.name);
         progress.x = player.body.x/16;
         progress.y = player.body.y/16;
     },
@@ -167,7 +164,6 @@ var sceneLake = {
         progress.scene = WIZARD.scene.current.name;
         fadeScreen(FADE_COLOR.DARK, FADE_COLOR.NONE, 600);
         easystar.setGrid(this.collisions);
-        console.log(this.name);
     },
     update: function(wiz){
         WIZARD.scene.updateEntities(this, wiz);
@@ -242,5 +238,4 @@ var scenePuzzle2 = {
         }
         return pieces;
     },
-
 };

@@ -212,9 +212,9 @@ wizard({
             if(!useDemoProgress){
                 WIZARD.progress.load("limbo", progress);
             }
-            index = WIZARD.scene.scenes["house"].entities.indexOf(player);
+            index = WIZARD.scene.scenes["lake"].entities.indexOf(player);
 
-            WIZARD.scene.scenes["house"].entities.splice(index, 1);
+            WIZARD.scene.scenes["lake"].entities.splice(index, 1);
 
             player.nextTileX = progress.x;
             player.nextTileY = progress.y;
