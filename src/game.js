@@ -119,9 +119,9 @@ var fadeScreen = function(from, to, time){
 var progress = {
     memory: 25,
     estadoManzana: true,
-    scene: "town",
-    x: 8,
-    y: 10,
+    scene: "house",
+    x: 4,
+    y: 8,
 };
 
 var strings = {

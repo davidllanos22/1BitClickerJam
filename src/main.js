@@ -200,7 +200,7 @@ wizard({
         WIZARD.map.loadToScene("forest", "forest", mapLoader);
 
         var index;
-        var useDemoProgress = true;
+        var useDemoProgress = false;
         var clear = false;
 
         if(clear){
@@ -210,9 +210,10 @@ wizard({
             if(!useDemoProgress){
                 WIZARD.progress.load("limbo", progress);
             }
-
             index = WIZARD.scene.scenes["house"].entities.indexOf(player);
-            WIZARD.scene.scenes["house"].entities.splice(index, 1);
+
+
+            //WIZARD.scene.scenes["house"].entities.splice(index);
             player.nextTileX = progress.x;
             player.nextTileY = progress.y;
             player.body.x = progress.x * 16;

@@ -88,7 +88,7 @@ var sceneRoadLake = {
     },
     render: function(wiz){
         WIZARD.scene.renderEntitiesAndLayers(this, wiz);
-        wiz.drawText("Mem:" + Math.floor(memory) + "%" + progress.scene, WIZARD.camera.x, WIZARD.camera.y, "font");
+        wiz.drawText("Mem:" + Math.floor(memory) + "%", WIZARD.camera.x, WIZARD.camera.y, "font");
     },
     onExit: function(wiz){
     }
