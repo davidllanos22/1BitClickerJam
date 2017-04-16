@@ -106,12 +106,13 @@ var entityChris = function(params){
         //Cogemos ancho y largo segun el mapa.
         var maxMapX = WIZARD.scene.current.collisions[0].length * 16;
         var maxMapY = WIZARD.scene.current.collisions.length * 16;
+
         // Control de la Camara
         var camX = this.body.x;
         var camY = this.body.y;
-        camX = Math.max(0, Math.min(Math.floor(camX - wiz.width / 2), maxMapX));
-        camY = Math.max(0, Math.min(Math.floor(camY- wiz.height / 2), maxMapY));
-
+        camX = Math.max(0, Math.min(Math.floor(camX - wiz.width / 2), Math.floor(maxMapX - wiz.width)));
+        camY = Math.max(0, Math.min(Math.floor(camY - wiz.height / 2), Math.floor(maxMapY - wiz.height)));
+        
         WIZARD.camera.setPosition(camX, camY);
 
 
