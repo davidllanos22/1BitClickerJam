@@ -134,6 +134,8 @@ easystar.setIterationsPerCalculation(100);
 
 var bodyMouse = WIZARD.physics.createAABB(WIZARD.input.x, WIZARD.input.y, 1,1);
 
+var playerCount = 0;
+
 wizard({
     width: 160,
     height: 112,
@@ -212,18 +214,20 @@ wizard({
             }
             index = WIZARD.scene.scenes["house"].entities.indexOf(player);
 
+            WIZARD.scene.scenes["house"].entities.splice(index, 1);
 
-            //WIZARD.scene.scenes["house"].entities.splice(index);
             player.nextTileX = progress.x;
             player.nextTileY = progress.y;
+            player.currentTileX = progress.x;
+            player.currentTileY = progress.y;
             player.body.x = progress.x * 16;
             player.body.y = progress.y * 16;
+
             WIZARD.scene.scenes[progress.scene].entities.push(player);
             memory = progress.memory;
         }
 
         WIZARD.scene.setCurrent("title", 0, this);
-
 
         //WIZARD.scene.setCurrent("house", 0, this);
         WIZARD.time.createTimer("incrementMemory", 1000, incrementMemory, "infinite", false);
@@ -250,6 +254,9 @@ wizard({
         overIcon = ICON.DEFAULT;
 
         WIZARD.scene.current.update(this);
+
+        if(playerCount == 2) console.log("2 players!");
+        playerCount = 0;
 
         scrollingText.update();
 

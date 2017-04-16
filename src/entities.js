@@ -19,6 +19,7 @@ var entityChris = function(params){
     };
 
     this.moveTo = function(tileX, tileY, callback){
+        if(interacting) return;
         var p = this;
         progress.x = tileX;
         progress.y = tileY;
@@ -58,11 +59,11 @@ var entityChris = function(params){
                     }, path.length - 1, true);
                 }
             });
+            easystar.calculate();
         }catch(e){
             console.log(e);
         }
 
-        easystar.calculate();
     };
 
     this.render = function(wiz){
@@ -70,6 +71,7 @@ var entityChris = function(params){
     };
 
     this.update = function(wiz) {
+        playerCount++;
         this.currentTileX = Math.floor((this.body.x + 0.5) / 16);
         this.currentTileY = Math.floor((this.body.y + 0.5) / 16);
         if (pressed && !overEntity && !scrollingText.showing) {
@@ -235,8 +237,10 @@ var entityObject =  function(params){
         else {
             if (progress.estadoManzana) showDialogue([instance.strings[1]]);
             else {
-                showDialogue([instance.strings[0]]);
-                progress.estadoManzana = !progress.estadoManzana;
+                showDialogue([instance.strings[0]], function(){
+                    progress.estadoManzana = !progress.estadoManzana;
+                    interacting = false;
+                });
             }
         }
     };
@@ -283,6 +287,7 @@ var entityNpc =  function(params){
     this.strings = strings.getString("girl");
 
     this.interact = function(){
+
         showDialogue([this.strings[0], this.strings[1]]);
     };
 
@@ -306,7 +311,10 @@ var entityPortal = function(params){
     this.xx = params.xx;
     this.yy = params.yy;
 
+
     this.interact = function(){
+        if(interacting) return;
+        interacting = true;
         var index = WIZARD.scene.current.entities.indexOf(player);
         player.cancelPath();
         var instance = this;
@@ -316,10 +324,12 @@ var entityPortal = function(params){
             lastScene.entities.splice(index, 1);
             player.nextTileX = instance.sceneX;
             player.nextTileY = instance.sceneY;
+            player.currentTileX = instance.sceneX;
+            player.currentTileY = instance.sceneY;
             player.body.x = instance.sceneX * 16;
             player.body.y = instance.sceneY * 16;
             WIZARD.scene.current.entities.push(player);
-
+            interacting = false;
         });
 
     };
@@ -352,7 +362,6 @@ var moveToEntityAndInteract = function(entity){
     var x = Math.floor(entity.body.x / 16);
     var y = Math.floor(entity.body.y / 16);
     var tile = getSurroundingFreeTile(x, y);
-    console.log("X DEL OBJECT: " + tile.x + "| Y DEL OBJECT: " + tile.y);
     player.moveTo(tile.x, tile.y, function(){
         entity.interact();
     });
@@ -387,9 +396,10 @@ var getSurroundingFreeTile = function(centerX, centerY){
     return tile;
 };
 
-var showDialogue = function(strings){
+var showDialogue = function(strings, callback){
     if(scrollingText.showing) return;
 
+    scrollingText.callback = callback;
     scrollingText.arrayIndex = 0;
     scrollingText.textArray = strings;
     scrollingText.showing = true;

@@ -283,6 +283,5 @@ var isFreeTile = function(x, y){
     var free =  x > 0 && x < WIZARD.scene.current.collisions[0].length &&
             y > 0 && y < WIZARD.scene.current.collisions.length &&
             WIZARD.scene.current.collisions[y][x] == 0;
-    console.log(x + " " + y + " free? " + free);
     return free;
 };

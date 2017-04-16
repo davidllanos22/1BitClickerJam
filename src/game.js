@@ -30,12 +30,15 @@ var scrollingText = {
     showingAllText: false,
     fullText: "",
     showing: false,
+    callback: null,
     update: function(){
         if(this.showing && pressed){
             if(this.showingAllText) {
                 if(this.arrayIndex < this.textArray.length - 1){
                     this.arrayIndex++;
                 }else{
+                    if(this.callback)this.callback();
+                    this.callback = null;
                     this.showing = false;
                 }
                 this.reset();
@@ -51,7 +54,7 @@ var scrollingText = {
         WIZARD.time.createTimer("scrollingText", speed, function(){
             if(instance.showingAllText) return;
             //wiz.playSound("talk");
-            instance.textToShow = text.substr(0, instance.count );
+            instance.textToShow = text.substr(0, instance.count);
             instance.count++;
             if(instance.count == text.length + 1){
                 instance.showingAllText = true;
