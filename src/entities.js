@@ -99,6 +99,9 @@ var entityChris = function(params){
             this.moveTo(targetTileX, targetTileY);
         }
 
+        this.body.x = WIZARD.math.lerp(this.body.x, this.nextTileX * 16, 0.04);
+        this.body.y = WIZARD.math.lerp(this.body.y, this.nextTileY * 16, 0.04);
+
         if (this.nextTileX < this.currentTileX && this.nextTileY == this.currentTileY) { // Camino a la izquierda
             animation = "player_walk_left";
         } else if (this.nextTileX > this.currentTileX && this.nextTileY == this.currentTileY) { // Camino a la derecha
@@ -110,9 +113,6 @@ var entityChris = function(params){
         } else if (targetTileX == this.currentTileX && targetTileY == this.currentTileY) { // Reset
             animation = "player_idle_down";
         }
-
-        this.body.x = WIZARD.math.lerp(this.body.x, this.nextTileX * 16, 0.04);
-        this.body.y = WIZARD.math.lerp(this.body.y, this.nextTileY * 16, 0.04);
 
         //Cogemos ancho y largo segun el mapa.
         var maxMapX = WIZARD.scene.current.collisions[0].length * 16;
@@ -239,12 +239,10 @@ var entityNpc =  function(params){
     this.render = function(wiz){
         switch(this.type) {
             case ENTITY_TYPE.GIRL:
-                //TODO: animation?
-                wiz.drawSprite("npc", this.body.x, this.body.y, 0, 0);
+                wiz.drawAnimation("npc", "girl_idle_down", this.body.x, this.body.y);
                 break;
             case ENTITY_TYPE.DOG_LAKE:
-                //TODO: animation?
-                wiz.drawSprite("npc", this.body.x, this.body.y, 0, 1);
+                wiz.drawAnimation("npc", "dog_idle_down", this.body.x, this.body.y);
                 break;
         }
     };
@@ -306,7 +304,8 @@ var entityTile = function(params){
     this.xx = params.xx;
     this.yy = params.yy;
     this.render = function(wiz){
-        wiz.drawSprite("tiles", this.x, this.y, this.xx, this.yy);
+        if(this.xx == 9 && this.yy == 3) wiz.drawAnimation("tiles", "water", this.x, this.y);
+        else wiz.drawSprite("tiles", this.x, this.y, this.xx, this.yy);
     }
 };
 
